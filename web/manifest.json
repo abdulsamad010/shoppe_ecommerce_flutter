@@ -1,0 +1,35 @@
+{
+    "name": "shoppe_ecommerce_flutter",
+    "short_name": "shoppe_ecommerce_flutter",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "OWASoft Technologies Pvt. Ltd. | Flutter Developer Internship Final Project — A complete Flutter-based eCommerce clothing and fashion store application with modern UI/UX, backend integration, authentication, product management, shopping features, and Firebase services.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
