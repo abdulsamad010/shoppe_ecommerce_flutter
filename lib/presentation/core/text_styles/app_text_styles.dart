@@ -30,7 +30,7 @@ class AppTextStyles {
 
 
   static final button1=GoogleFonts.nunitoSans(
-    color: black,
+    color: white,
     fontSize: 22,
     letterSpacing: 0,
     fontWeight: FontWeight(300),
@@ -55,6 +55,14 @@ class AppTextStyles {
     fontSize: 19,
     letterSpacing: 0,
     fontWeight: FontWeight(300),
+  );
+
+
+  static final b2=GoogleFonts.nunitoSans(
+    color: black,
+    fontSize: 12,
+    letterSpacing: 0,
+    fontWeight: FontWeight(400),
   );
 
 
