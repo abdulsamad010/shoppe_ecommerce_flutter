@@ -168,6 +168,20 @@ class FoodData {
  }
 
 
+ Future<Map<String,dynamic>> fetchFlashSale() async{
+
+  final snapshot = await FirebaseFirestore.instance
+      .collection("app_events")
+      .doc("flash_sale")
+      .get();
+
+  final data = snapshot.data();
+
+  return data ?? {};
+ }
+
+
+
  Future<void> storeOrder(Map<String,dynamic> orderDetails)async {
   final ref = await FirebaseFirestore.instance.collection("app_orders").add(
       orderDetails);
@@ -369,12 +383,13 @@ class FoodData {
   if (user != null) {
 
    try {
+
+    await user.delete();
+
     await FirebaseFirestore.instance
         .collection("users_data")
         .doc(user.uid)
         .delete();
-
-    await user.delete();
 
     return false;
 

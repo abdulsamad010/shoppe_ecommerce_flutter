@@ -68,6 +68,10 @@ class GetFoods{
     return repository.storeReview(details);
   }
 
+  Future<Map<String,dynamic>> fetchFlashSale(){
+    return repository.fetchFlashSale();
+  }
+
   Future<Map<String, List<String>>> getSubCategories(){
     return repository.getSubCategories();
   }

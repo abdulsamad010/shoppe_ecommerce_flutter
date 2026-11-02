@@ -16,6 +16,7 @@ abstract class FoodRepository {
   Future<List<Map<String,dynamic>>> fetchDelivery();
   Future<List<Map<String,dynamic>>> fetchVoucher();
   Future<Map<String,dynamic>> fetchOrdersAndImage();
+  Future<Map<String,dynamic>> fetchFlashSale();
   Future<void> storeReview(Map<String,dynamic> details);
   Future<Map<String, List<String>>> getSubCategories();
 }

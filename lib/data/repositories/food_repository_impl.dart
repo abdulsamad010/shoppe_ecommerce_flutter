@@ -109,6 +109,10 @@ class FoodRepositoryImpl extends FoodRepository {
     return await fD.deleteUser();
   }
 
+  Future<Map<String,dynamic>> fetchFlashSale() async{
+    return await fD.fetchFlashSale();
+  }
+
   Future<void> storeReview(Map<String,dynamic> details) async{
     return await fD.storeReview(details);
   }
