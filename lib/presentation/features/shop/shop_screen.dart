@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +35,6 @@ class _ShopScreenState extends State<ShopScreen> {
   void initState() {
     super.initState();
     context.read<AppBloc>().add(GetProducts());
-
   }
 
   @override
@@ -480,6 +480,91 @@ class _ShopScreenState extends State<ShopScreen> {
 
                       SizedBox(width: 8.w,),
 
+
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              state.flashSale['endAt'] == null
+                                  ? '00'
+                                  : ((state.flashSale['endAt'] as Timestamp)
+                                  .toDate()
+                                  .difference(DateTime.now())
+                                  .isNegative
+                                  ? 0
+                                  : (state.flashSale['endAt'] as Timestamp)
+                                  .toDate()
+                                  .difference(DateTime.now())
+                                  .inDays ~/
+                                  30)
+                                  .toString()
+                                  .padLeft(2, '0'),
+                              style: AppTextStyles.h3.copyWith(fontSize: 17),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              state.flashSale['endAt'] == null
+                                  ? '00'
+                                  : ((state.flashSale['endAt'] as Timestamp)
+                                  .toDate()
+                                  .difference(DateTime.now())
+                                  .isNegative
+                                  ? 0
+                                  : (state.flashSale['endAt'] as Timestamp)
+                                  .toDate()
+                                  .difference(DateTime.now())
+                                  .inDays %
+                                  30)
+                                  .toString()
+                                  .padLeft(2, '0'),
+                              style: AppTextStyles.h3.copyWith(fontSize: 17),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              state.flashSale['endAt'] == null
+                                  ? '00'
+                                  : ((state.flashSale['endAt'] as Timestamp)
+                                  .toDate()
+                                  .difference(DateTime.now())
+                                  .isNegative
+                                  ? 0
+                                  : (state.flashSale['endAt'] as Timestamp)
+                                  .toDate()
+                                  .difference(DateTime.now())
+                                  .inHours %
+                                  24)
+                                  .toString()
+                                  .padLeft(2, '0'),
+                              style: AppTextStyles.h3.copyWith(fontSize: 17),
+                            ),
+                          ),
+                        ],
+                      ),
+
+
+
+                      SizedBox(width: 8.w,),
+
+
                       GestureDetector(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>FlashSales()));
@@ -598,7 +683,14 @@ class _ShopScreenState extends State<ShopScreen> {
             child: Padding(
               padding:  EdgeInsets.only(left:17.w,right: 17.w,top: 8.w,bottom: 8.w),
               child: Column(
+                crossAxisAlignment: .start,
                 children: [
+
+                  SizedBox(height: 16.h,),
+
+                  Text("All Items",style: AppTextStyles.h3,),
+
+                  SizedBox(height: 16.h,),
 
                   GridView.builder(
                       itemCount: state.searchedProducts.length,

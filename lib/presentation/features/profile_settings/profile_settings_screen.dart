@@ -232,7 +232,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                           onPressed: () {
 
 
-                            if(formKey.currentState!.validate() && state.picker!=null){
+                            if(formKey.currentState!.validate()){
 
                               if (state.picker == null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -256,13 +256,41 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                 ));
 
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Profile updated successfully'),
-                                  ),
-                                );
+                                if(state.status=="successful") {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Profile updated successfully'),
+                                    ),
+                                  );
+                                  Navigator.pop(context);
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          SettingsScreen()));
+                                }
+                                else if(state.status=="exception"){
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Profile updated failed, please fresh login first and than update!!'),
+                                    ),
+                                  );
+                                }
+                                else{
 
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>SettingsScreen()));
+                                    showDialog(context: context, builder: (context) {
+                                      return AlertDialog(
+                                        backgroundColor: white,
+                                        content: Container(
+                                            height: 50.h,
+                                            width: 50.w,
+                                            child: Center(
+                                                child: CircularProgressIndicator(color: blue,))),
+                                      );
+                                    });
+
+                                }
 
                               }
 

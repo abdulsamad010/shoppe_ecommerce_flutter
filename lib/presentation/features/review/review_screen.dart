@@ -32,7 +32,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
         body: Padding(
           padding:  EdgeInsets.all(16.w),
           child: ListView.builder(
-              itemCount: state.products[widget.productIndex].reviews.length,
+              itemCount: state.products[widget.productIndex].reviewersImages.length,
               itemBuilder: (context,index){
                 return ReviewCard(productIndex: widget.productIndex, ReviewIndex: index);
               }),

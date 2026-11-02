@@ -76,6 +76,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
 
           context.read<AppBloc>().add(CleanLoginStatus());
 
+
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) =>
                   HelloCardScreen()));

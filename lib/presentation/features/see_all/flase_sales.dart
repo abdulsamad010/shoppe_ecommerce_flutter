@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,7 @@ class FlashSales extends StatelessWidget {
 
 
                        Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
                            Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,6 +60,96 @@ class FlashSales extends StatelessWidget {
 
                              ],
                            ),
+
+
+                           Row(
+                             children: [
+
+                               Center(child: Icon(Icons.timer_sharp,color: white,)),
+
+                               SizedBox(width: 8.w,),
+
+
+                               Container(
+                                 padding: const EdgeInsets.all(5),
+                                 decoration: BoxDecoration(
+                                   color: Colors.grey.shade100,
+                                   borderRadius: BorderRadius.circular(8),
+                                 ),
+                                 child: Text(
+                                   state.flashSale['endAt'] == null
+                                       ? '00'
+                                       : ((state.flashSale['endAt'] as Timestamp)
+                                       .toDate()
+                                       .difference(DateTime.now())
+                                       .isNegative
+                                       ? 0
+                                       : (state.flashSale['endAt'] as Timestamp)
+                                       .toDate()
+                                       .difference(DateTime.now())
+                                       .inDays ~/
+                                       30)
+                                       .toString()
+                                       .padLeft(2, '0'),
+                                   style: AppTextStyles.h3.copyWith(fontSize: 17),
+                                 ),
+                               ),
+                               const SizedBox(width: 8),
+                               Container(
+                                 padding: const EdgeInsets.all(5),
+                                 decoration: BoxDecoration(
+                                   color: Colors.grey.shade100,
+                                   borderRadius: BorderRadius.circular(8),
+                                 ),
+                                 child: Text(
+                                   state.flashSale['endAt'] == null
+                                       ? '00'
+                                       : ((state.flashSale['endAt'] as Timestamp)
+                                       .toDate()
+                                       .difference(DateTime.now())
+                                       .isNegative
+                                       ? 0
+                                       : (state.flashSale['endAt'] as Timestamp)
+                                       .toDate()
+                                       .difference(DateTime.now())
+                                       .inDays %
+                                       30)
+                                       .toString()
+                                       .padLeft(2, '0'),
+                                   style: AppTextStyles.h3.copyWith(fontSize: 17),
+                                 ),
+                               ),
+                               const SizedBox(width: 8),
+                               Container(
+                                 padding: const EdgeInsets.all(5),
+                                 decoration: BoxDecoration(
+                                   color: Colors.grey.shade100,
+                                   borderRadius: BorderRadius.circular(8),
+                                 ),
+                                 child: Text(
+                                   state.flashSale['endAt'] == null
+                                       ? '00'
+                                       : ((state.flashSale['endAt'] as Timestamp)
+                                       .toDate()
+                                       .difference(DateTime.now())
+                                       .isNegative
+                                       ? 0
+                                       : (state.flashSale['endAt'] as Timestamp)
+                                       .toDate()
+                                       .difference(DateTime.now())
+                                       .inHours %
+                                       24)
+                                       .toString()
+                                       .padLeft(2, '0'),
+                                   style: AppTextStyles.h3.copyWith(fontSize: 17),
+                                 ),
+                               ),
+
+
+                             ],
+                           ),
+
+
 
 
 

@@ -277,7 +277,7 @@ class _CartScreenState extends State<CartScreen> {
 
                 SizedBox(height: 16.w,),
 
-                state.cart.length==0 ? Center(child: SvgPicture.asset("assets/icons/Empty Cart.svg"))
+                state.cart==null || state.cart.length==0 ? Center(child: SvgPicture.asset("assets/icons/Empty Cart.svg"))
 
                     : ListView.builder(
                   shrinkWrap: true,

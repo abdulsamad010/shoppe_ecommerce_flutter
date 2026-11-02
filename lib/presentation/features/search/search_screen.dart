@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
       listener: (context, state) { if(isSubmit) {
         if(state.searchedProducts.isNotEmpty) {
           sC.clear();
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>ShopScreen()));
+          Navigator.pop(context);
         isSubmit=false;
         }
         else{ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No matching product found",style: AppTextStyles.b1),backgroundColor: Colors.transparent
@@ -145,7 +145,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   Wrap(
                     spacing: 10.w,
                     runSpacing: 10.w,
-                    children: List.generate(state.searchHistory.length,
+                    children: List.generate(mainCategories.length,
                           (index) => Container(
                         height: 36.h,
                         width: 62.w,
@@ -154,7 +154,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             color: Color(0xFFF4F4F4)
                         ),
                         child:Center(
-                          child: Text("$mainCategories",style: GoogleFonts.raleway(
+                          child: Text("${mainCategories[index]}",style: GoogleFonts.raleway(
                               fontWeight: FontWeight(500),
                               fontSize: 17,
                               letterSpacing: -0.17

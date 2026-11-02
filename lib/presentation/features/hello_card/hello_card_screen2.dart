@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_bloc.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_event.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/text_styles/app_text_styles.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/shop/shop_screen.dart';
@@ -78,6 +81,7 @@ class _HelloCardScreen2State extends State<HelloCardScreen2> {
                               height: 50.h,
                               child: ElevatedButton(onPressed: (){
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()));
+                                context.read<AppBloc>().add(ScreensNavigation(index: 0));
                               },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: blue,

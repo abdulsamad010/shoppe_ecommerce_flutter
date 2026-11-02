@@ -154,33 +154,44 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     SizedBox(height: 90.h,),
 
-                    Text("Create",style: AppTextStyles.h1),
-                    Text("Account",style: AppTextStyles.h1),
+                    Padding(
+                      padding: EdgeInsets.all(8.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                    SizedBox(height: 42.h,),
+                          Text("Create",style: AppTextStyles.h1),
+                          Text("Account",style: AppTextStyles.h1),
 
-                    GestureDetector(
-                        onTap: ()async{
-                          final imagePicker=ImagePicker();
-                          XFile? picker= await imagePicker.pickImage(
-                            source: ImageSource.gallery,
-                          );
+                          SizedBox(height: 42.h,),
 
-                          context.read<AppBloc>().add(Picker(picker: picker));
+                          GestureDetector(
+                              onTap: ()async{
+                                final imagePicker=ImagePicker();
+                                XFile? picker= await imagePicker.pickImage(
+                                  source: ImageSource.gallery,
+                                );
 
-                        },
-                        child:
-                        state.picker!=null?
-                            Container(
-                              height: 90.h,
-                              width: 90.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle
-                              ),
-                              clipBehavior: Clip.hardEdge,
-                              child: Image.file(fit: BoxFit.cover,File(state.picker!.path)),
-                            ) :
-                        SvgPicture.asset("assets/icons/Upload Photo.svg")),
+                                context.read<AppBloc>().add(Picker(picker: picker));
+
+                              },
+                              child:
+                              state.picker!=null?
+                              Container(
+                                height: 90.h,
+                                width: 90.w,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle
+                                ),
+                                clipBehavior: Clip.hardEdge,
+                                child: Image.file(fit: BoxFit.cover,File(state.picker!.path)),
+                              ) :
+                              SvgPicture.asset("assets/icons/Upload Photo.svg")),
+
+
+                        ],
+                      ),
+                    ),
 
                     SizedBox(height: 28.h,),
 

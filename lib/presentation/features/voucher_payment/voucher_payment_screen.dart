@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_state.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/widgets/voucher_card.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/features/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/to_receive/to_receive_screen.dart';
 
 import '../../core/bloc/app_bloc/app_bloc.dart';
@@ -78,7 +79,10 @@ class _VoucherPaymentScreenState extends State<VoucherPaymentScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppBloc,AppState>(
       listener: (context, state) {
+
+
         if(state.cart.isEmpty && isShowed==false){
+
           showDialog(
               barrierDismissible: false,
               context: context, builder: (context){
@@ -109,39 +113,53 @@ class _VoucherPaymentScreenState extends State<VoucherPaymentScreen> {
                           ),
                           child: Center(child: SvgPicture.asset("assets/icons/Component 5 – 2.svg",height: 50.w,width: 50.w,))),
 
-                      SizedBox(height: 8.h),
+                      Transform.translate(
+                        offset: Offset(0, 15),
+                        child: Column(
+                          children: [
 
-                      Text("Done!",style: GoogleFonts.raleway(
-                        fontSize: 19,
-                        fontWeight: FontWeight(700),
-                      ),),
+                            Text("Done!",style: GoogleFonts.raleway(
+                              fontSize: 19,
+                              fontWeight: FontWeight(700),
+                            ),),
 
-                      SizedBox(height: 8.h,width: 347.w,),
+                            SizedBox(height: 8.h,width: 347.w,),
 
-                      Text("Your order is placed successfully",style: GoogleFonts.nunitoSans(
-                        fontSize: 13,
-                        fontWeight: FontWeight(600),
-                      ),),
+                            Text("Your order is placed successfully",style: GoogleFonts.nunitoSans(
+                              fontSize: 13,
+                              fontWeight: FontWeight(600),
+                            ),),
 
 
-                      SizedBox(height: 22.h,),
 
-                      SizedBox(
-                        width: 163.w,
-                        height: 40.h,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFE7E8EB),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(11.r)
-                            )
-                            ),
-                            onPressed: (){
 
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ToReceiveScreen()),(route) => true,);
-                              isShowed=true;
+                          ],
+                        ),
+                      ),
 
-                        }, child: Text("Track My Order",style: AppTextStyles.b2,)),
+                      Transform.translate(
+                        offset: Offset(0, 22),
+                        child: SizedBox(
+                          width: 163.w,
+                          height: 40.h,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFE7E8EB),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(11.r)
+                                  )
+                              ),
+                              onPressed: (){
+
+                                print("done");
+                                context.read<AppBloc>().add(ScreensNavigation(index: 2));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()));
+                                isShowed=true;
+
+                              }, child: Text("Track My Order",style: AppTextStyles.b2,)),
+                        ),
                       )
+
+
                     ],
                   ),
                 ),
@@ -149,6 +167,23 @@ class _VoucherPaymentScreenState extends State<VoucherPaymentScreen> {
             );
           });
         }
+
+
+
+        if(state.isProceed){
+
+          showDialog(context: context, builder: (context) {
+            return AlertDialog(
+              backgroundColor: white,
+              content: Container(
+                  height: 50.h,
+                  width: 50.w,
+                  child: Center(
+                      child: CircularProgressIndicator(color: blue,))),
+            );
+          });
+        }
+
       },
 
       builder:(context, state) {
@@ -406,67 +441,74 @@ class _VoucherPaymentScreenState extends State<VoucherPaymentScreen> {
                               onTap: () {
                                 showModalBottomSheet(
                                   context: context,
+                                  useSafeArea: true,
                                   isScrollControlled: true,
                                   builder: (context) {
-                                    return Form(
-                                      key: pGK,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(16.w),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Contact Information",
-                                              style: AppTextStyles.h3,
-                                            ),
-                                            SizedBox(height: 20.h),
-                                            Text(
-                                              "Phone Number",
-                                              style: AppTextStyles.b2,
-                                            ),
-                                            SizedBox(height: 6.h),
-                                            InputField(
-                                              bColor: lightGrey,
-                                              con: phC,
-                                              hint: Text("Enter phone number"),
-                                              isAbscure: false,
-                                              isPrefix: false,
-                                              isSuffix: false,
-                                              label: Text("Phone Number"),
-                                              preIcon: SizedBox(),
-                                              suffIcon: SizedBox(),
-                                              val: phV,
-                                            ),
-                                            SizedBox(height: 20.h),
-                                            SizedBox(
-                                              width: double.infinity,
-                                              height: 48.h,
-                                              child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: blue,
-                                                  foregroundColor: Colors.white,
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                                      ), child: Form(
+                                        key: pGK,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(16.w),
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Contact Information",
+                                                  style: AppTextStyles.h3,
                                                 ),
-                                                onPressed: () {
-                                                  if (pGK.currentState!.validate()) {
-                                                    String contact =
-                                                        "${phC.text.trim()}";
+                                                SizedBox(height: 20.h),
+                                                Text(
+                                                  "Phone Number",
+                                                  style: AppTextStyles.b2,
+                                                ),
+                                                SizedBox(height: 6.h),
+                                                InputField(
+                                                  bColor: lightGrey,
+                                                  con: phC,
+                                                  hint: Text("Enter phone number"),
+                                                  isAbscure: false,
+                                                  isPrefix: false,
+                                                  isSuffix: false,
+                                                  label: Text("Phone Number"),
+                                                  preIcon: SizedBox(),
+                                                  suffIcon: SizedBox(),
+                                                  val: phV,
+                                                ),
+                                                SizedBox(height: 20.h),
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                  height: 48.h,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: blue,
+                                                      foregroundColor: Colors.white,
+                                                    ),
+                                                    onPressed: () {
+                                                      if (pGK.currentState!.validate()) {
+                                                        String contact =
+                                                            "${phC.text.trim()}";
 
-                                                    context.read<AppBloc>().add(
-                                                      EditAddress(
-                                                        value: contact,
-                                                        purpose: "contact",
-                                                      ),
-                                                    );
+                                                        context.read<AppBloc>().add(
+                                                          EditAddress(
+                                                            value: contact,
+                                                            purpose: "contact",
+                                                          ),
+                                                        );
 
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                                child: Text("Save Changes"),
-                                              ),
+                                                        Navigator.pop(context);
+                                                      }
+                                                    },
+                                                    child: Text("Save Changes"),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 12.h),
+                                              ],
                                             ),
-                                            SizedBox(height: 12.h),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     );
@@ -740,7 +782,9 @@ class _VoucherPaymentScreenState extends State<VoucherPaymentScreen> {
                     onTap: (){
 
                       if(total!=0 && state.address.isNotEmpty && state.cart.isNotEmpty){
+
                         context.read<AppBloc>().add(StoreOrder(totalCost: total));
+
                       }
                     },
                     child: Container(

@@ -35,7 +35,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
     return BlocBuilder<AppBloc,AppState>(
       builder: (context,state) {
         return Scaffold(
-
+          backgroundColor: white,
           appBar: AppBar(
 
             backgroundColor: white,

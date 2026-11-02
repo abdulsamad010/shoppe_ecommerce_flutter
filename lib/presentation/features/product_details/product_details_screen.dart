@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_event.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_state.dart';
@@ -16,6 +17,8 @@ import '../../core/bloc/app_bloc/app_bloc.dart';
 import '../../core/colors/app_colors.dart';
 import '../../core/text_styles/app_text_styles.dart';
 import '../../core/widgets/custom_cart_floating_action_button.dart';
+import '../../core/widgets/just_for_you_card.dart';
+import '../../core/widgets/top_products_card.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   String productId;
@@ -98,7 +101,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
             
             
-                          SvgPicture.asset("assets/icons/Share.svg")
+                          IconButton(
+                              onPressed: (){
+                                SharePlus.instance.share(
+                                  ShareParams(
+                                    text: 'Check out ${state.products[index!].name} for Rs. ${state.products[index!].price}!',
+                                  ),
+                                );
+                              },
+                              icon: SvgPicture.asset("assets/icons/Share.svg"))
                         ],
                       ),
             
@@ -508,8 +519,72 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             fontSize: 16,
                             color: Color(0xFFF3F3F3)),)),
                       ),
-          
-          
+
+
+                      SizedBox(height: 26.h,),
+
+                      Text("Top Products",style: AppTextStyles.h3,),
+
+                      SizedBox(height: 22.h,),
+
+                      SizedBox(
+                        height: 109.h,
+                        width: 335.w,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.topSoldProducts.length,
+                            itemBuilder: (context,index){
+                              return Padding(
+                                padding: EdgeInsets.only(right:8.w),
+                                child: GestureDetector(
+                                    onTap: (){
+
+                                      int topIndex=state.products.indexWhere((item) {
+                                        return item.id == state.topSoldProducts[index].id;
+                                      });
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ProductDetailsScreen(
+                                              productId: state.products[topIndex].id
+                                          ),
+                                        ),
+                                      );
+
+                                    },
+                                    child: TopProductsCard(image: "${state.topSoldProducts[index].imageUrl}")),
+                              );
+                            }),
+                      ),
+
+
+                      SizedBox(height: 22.h,),
+
+                      Text("You Might Like",style: AppTextStyles.h3,),
+
+                      SizedBox(height: 22.h,),
+
+                      GridView.builder(
+                          itemCount: state.products.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+                              childAspectRatio: 0.8,
+                              mainAxisSpacing: 1.w,
+                              crossAxisSpacing: 0.w
+                          ),
+                          itemBuilder: (context,index){
+                            return Padding(
+                                padding: EdgeInsets.only(left: 3,right:3.w),
+                                child: GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsScreen(productId:state.products[index].id)));
+                                    },
+                                    child: JustForYouCard(image: "${state.products[index].imageUrl}", text: "${state.products[index].name}", price: state.products[index].price))
+                            );
+                          }),
+
                      
                     ],
                   ),

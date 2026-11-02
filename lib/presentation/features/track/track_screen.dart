@@ -12,6 +12,7 @@ import '../../core/bloc/app_bloc/app_event.dart';
 import '../../core/bloc/app_bloc/app_state.dart';
 import '../../core/colors/app_colors.dart';
 import '../../core/text_styles/app_text_styles.dart';
+import '../voucher/voucher_screen.dart';
 
 class TrackScreen extends StatefulWidget {
   int ordersPlacedIndex;
@@ -85,6 +86,28 @@ class _TrackScreenState extends State<TrackScreen> {
 
               ],
             ),
+
+
+            actionsPadding: EdgeInsets.only(right:16.w,top: 4.w),
+            actions: [
+
+              IconButton(
+                  onPressed: (){
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>VoucherScreen()));
+
+                  },
+                  icon: SvgPicture.asset("assets/icons/Component 7 – 3.svg")),
+
+              //SizedBox(width: 8.w,),
+
+              IconButton(
+                  onPressed: (){
+
+                  },
+                  icon: SvgPicture.asset("assets/icons/Settings.svg"))
+
+            ],
           ),
 
           backgroundColor: white,

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_state.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/text_styles/app_text_styles.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/widgets/to_recieve_card.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/features/settings/settings_screen.dart';
 
 import '../../core/bloc/app_bloc/app_bloc.dart';
 import '../../core/bloc/app_bloc/app_event.dart';
 import '../../core/colors/app_colors.dart';
+import '../voucher/voucher_screen.dart';
 
 class ToReceiveScreen extends StatefulWidget {
   bool toRecieveOnly;
@@ -93,37 +96,65 @@ class _ToReceiveScreenState extends State<ToReceiveScreen> {
 
             ],
           ),
+
+          actionsPadding: EdgeInsets.only(right:16.w,top: 4.w),
+          actions: [
+
+            IconButton(
+                onPressed: (){
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>VoucherScreen()));
+
+                },
+                icon: SvgPicture.asset("assets/icons/Component 7 – 3.svg")),
+
+            //SizedBox(width: 8.w,),
+
+            IconButton(
+                onPressed: (){
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingsScreen()));
+
+                },
+                icon: SvgPicture.asset("assets/icons/Settings.svg"))
+
+          ],
         ),
 
         backgroundColor: white,
 
-        body: Padding(
-          padding: EdgeInsets.only(left:16.w,right: 16.w,top: 22.w,bottom: 16.w),
-          child: ListView.builder(
-            itemCount: widget.toRecieveOnly
-                ? toRecieveIndexes.length
-                : widget.toReviewOnly
-                ? toReviewIndexes.length
-                : state.ordersPlaced.length,
+        body:
 
-            itemBuilder: (context, index) {
-              int orderIndex;
+            Center(
+              child: state.ordersPlaced.isEmpty?Text("No order is placed yet!!",style: AppTextStyles.h3,) :
+                      Padding(
+                        padding: EdgeInsets.only(left:16.w,right: 16.w,top: 22.w,bottom: 16.w),
+                        child: ListView.builder(
+              itemCount: widget.toRecieveOnly
+                  ? toRecieveIndexes.length
+                  : widget.toReviewOnly
+                  ? toReviewIndexes.length
+                  : state.ordersPlaced.length,
 
-              if (widget.toRecieveOnly) {
-                orderIndex = toRecieveIndexes[index];
-              } else if (widget.toReviewOnly) {
-                orderIndex = toReviewIndexes[index];
-              } else {
-                orderIndex = index;
-              }
+              itemBuilder: (context, index) {
+                int orderIndex;
 
-              return Padding(
-                padding: EdgeInsets.only(bottom: 8.w),
-                child: ToRecieveCard(index: orderIndex),
-              );
-            },
-          ),
-        ),
+                if (widget.toRecieveOnly) {
+                  orderIndex = toRecieveIndexes[index];
+                } else if (widget.toReviewOnly) {
+                  orderIndex = toReviewIndexes[index];
+                } else {
+                  orderIndex = index;
+                }
+
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 8.w),
+                  child: ToRecieveCard(index: orderIndex),
+                );
+              },
+                        ),
+                      ),
+            ),
       ),
     );
   }
