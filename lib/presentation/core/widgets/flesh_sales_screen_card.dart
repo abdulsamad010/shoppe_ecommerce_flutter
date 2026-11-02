@@ -105,24 +105,31 @@ class FleshSalesScreenCard extends StatelessWidget {
                 SizedBox(
                   width: 80.w,
                   height: 18.w,
-                  child: Row(
-                    children: [
-                      Transform.translate(
-                          offset: Offset(-8.w, 0),
-                          child: Icon(Icons.attach_money,fontWeight:FontWeight(700),color: Color(0xFFF1AEAE),)),
-
-                      Flexible(
-                        child: Transform.translate(
-                          offset: Offset(-14.w, 0),
-                          child: Text("${price/(1-discount/100)}",style: AppTextStyles.h3.copyWith(
-                            fontSize: 17,
-                            letterSpacing: -0.17
-                            ,color: Color(0xFFF1AEAE),
-                          ),),
+                  child: Stack(
+                    children:[ 
+                      Row(
+                      children: [
+                        Transform.translate(
+                            offset: Offset(-8.w, 0),
+                            child: Icon(Icons.attach_money,fontWeight:FontWeight(700),color: Color(0xFFF1AEAE),)),
+                    
+                        Flexible(
+                          child: Transform.translate(
+                            offset: Offset(-14.w, 0),
+                            child: Text("${price/(1-discount/100)}",style: AppTextStyles.h3.copyWith(
+                              fontSize: 17,
+                              letterSpacing: -0.17
+                              ,color: Color(0xFFF1AEAE),
+                            ),),
+                          ),
                         ),
-                      ),
-
-                    ],
+                    
+                      ],
+                    ),
+                      
+                      Text("__________",style: TextStyle(color:Color(0xFFF1AEAE) ),)
+                      
+    ]
                   ),
                 ),
 

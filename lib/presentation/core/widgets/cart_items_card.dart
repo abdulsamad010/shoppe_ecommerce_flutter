@@ -87,91 +87,108 @@ class _CartItemsCardState extends State<CartItemsCard> {
 
             SizedBox(width: 8.w,),
 
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            SizedBox(
+              width: 203.w,
+              height: 109.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-                Text("${state.products[productIndex!].name}",style: GoogleFonts.nunitoSans(fontSize: 12,fontWeight: FontWeight(400)),),
+                  SizedBox(height: 2.w,),
+                  Expanded(child: Text("${state.products[productIndex!].name}",style: GoogleFonts.nunitoSans(fontSize: 12,fontWeight: FontWeight(400)),)),
 
-                SizedBox(height: 12.h,),
+                  Flexible(child: SizedBox(height: 8.w,)),
 
-                Text("${state.cart[widget.index]["color"]}, Size ${state.cart[widget.index]["size"]}",style: AppTextStyles.b2.copyWith(letterSpacing: -0.14,fontWeight: FontWeight(500),fontSize: 14),),
+                  Text("${state.cart[widget.index]["color"]}, Size ${state.cart[widget.index]["size"]}",style: AppTextStyles.b2.copyWith(letterSpacing: -0.14,fontWeight: FontWeight(500),fontSize: 14),),
 
-                SizedBox(height: 18.h,),
+                  Spacer(),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
 
-                    Row(
-                      children: [
-                        Icon(Icons.attach_money,fontWeight:FontWeight(700),),
+                      Flexible(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.attach_money,size: 20,),
 
 
-                        Transform.translate(
-                          offset: Offset(-6.w, 0),
-                          child: Text("${(state.products[productIndex!].price)*(state.cart[widget.index]["quantity"] as num)}",style: AppTextStyles.h3.copyWith(
-                              fontSize: 17,
-                              letterSpacing: -0.17
-                          ),),
+                            Transform.translate(
+                              offset: Offset(-4.w, 0),
+                              child: Text("${(state.products[productIndex!].price)*(state.cart[widget.index]["quantity"] as num)}",style: AppTextStyles.h3.copyWith(
+                                  fontSize: 15,
+                                  letterSpacing: -0.17
+                              ),),
+                            ),
+
+
+                          ],
                         ),
+                      ),
 
 
-                      ],
-                    ),
+                      Spacer(),
 
 
-
-SizedBox(width: 5.w),
-
-                    Row(
-                      children: [
-                        IconButton(onPressed: (){
-
-
-                            if(state.cart[widget.index]['quantity']>1) {
-                              context.read<AppBloc>().add(DecreaseQuantityFromCart(decreaseIndex: widget.index));
-                            }
-
-                        }, icon: SvgPicture.asset("assets/icons/Less.svg",height: 30.h,width: 30.w,)),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 30.w,
+                            height: 30.w,
+                            child: IconButton(onPressed: (){
 
 
+                                if(state.cart[widget.index]['quantity']>1) {
+                                  context.read<AppBloc>().add(DecreaseQuantityFromCart(decreaseIndex: widget.index));
+                                }
 
-
-
-                        Container(
-                          height: 25.h,
-                          width: 54.w,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFF9F9F9),
-                              borderRadius: BorderRadius.circular(4.r)
+                            }, icon: SvgPicture.asset("assets/icons/Less.svg",height: 30.h,width: 30.w,)),
                           ),
-                          child: Center(
-                            child: Text("${state.cart[widget.index]["quantity"]}",style: GoogleFonts.raleway(
-                              fontSize: 14,
-                              fontWeight: FontWeight(500),
-                            ),),
+
+
+
+
+
+                           Container(
+                             width: 37.w,
+                              height: 30.w,
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFE5EBFC),
+                                  borderRadius: BorderRadius.circular(4.r)
+                              ),
+                              child: Center(
+                                child: Text("${state.cart[widget.index]["quantity"]}",style: GoogleFonts.raleway(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight(500),
+                                ),),
+                              ),
+                            ),
+
+
+
+
+                          SizedBox(
+                            width: 30.w,
+                            height: 30.w,
+                            child: IconButton(onPressed: (){
+
+                               if (state
+                                    .cart[widget.index]['quantity'] <
+                                    state.products[state.products.indexWhere((item)=>item.id==state.cart[widget.index]["productId"])]
+                                        .quantity) {
+                                          context.read<AppBloc>().add(IncreaseQuantityFromCart(increaseIndex: widget.index));
+                                }
+
+
+
+                            }, icon: SvgPicture.asset("assets/icons/More (1).svg",height: 30.h,width: 30.w,),),
                           ),
-                        ),
 
 
-
-                        IconButton(onPressed: (){
-
-                           if (state
-                                .cart[widget.index]['quantity'] <
-                                state.products[state.products.indexWhere((item)=>item.id==state.cart[widget.index]["productId"])]
-                                    .quantity) {
-    context.read<AppBloc>().add(IncreaseQuantityFromCart(increaseIndex: widget.index));
-                            }
-
-
-
-                        }, icon: SvgPicture.asset("assets/icons/More (1).svg",height: 30.h,width: 30.w,),),
-
-
-                      ],
-                    ),
+                        ],
+                      ),
 
 
 
@@ -179,9 +196,10 @@ SizedBox(width: 5.w),
 
 
 
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             )
 
           ],

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../colors/app_colors.dart';
 
@@ -16,10 +17,10 @@ class ProgressSlider extends StatelessWidget {
     final int stage = currentStage.clamp(1, 6);
 
     return SizedBox(
-      height: 30,
+      height: 41.w,
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
-          trackHeight: 8,
+          trackHeight: 8.w,
           trackShape: ThreeCircleTrackShape(
             currentStage: stage,
           ),
@@ -27,6 +28,7 @@ class ProgressSlider extends StatelessWidget {
           overlayShape: SliderComponentShape.noOverlay,
           activeTrackColor: blue,
           inactiveTrackColor: const Color(0xFFE5EAFB),
+          thumbSize: WidgetStatePropertyAll(Size(30.w, 30.w)),
         ),
         child: Slider(
           value: stage.toDouble(),
@@ -55,7 +57,7 @@ class ThreeCircleTrackShape extends SliderTrackShape {
     bool isDiscrete = false,
   }) {
     const double horizontalPadding = 8;
-    final double height = sliderTheme.trackHeight ?? 2.5;
+    final double height = 14.w;
 
     return Rect.fromLTWH(
       offset.dx + horizontalPadding,
@@ -104,7 +106,7 @@ class ThreeCircleTrackShape extends SliderTrackShape {
       Offset(endX, centerY),
       Paint()
         ..color = inactiveColor
-        ..strokeWidth = 2.5
+        ..strokeWidth = 14.w
         ..strokeCap = StrokeCap.round,
     );
 
@@ -113,13 +115,14 @@ class ThreeCircleTrackShape extends SliderTrackShape {
 
     final double progressX =
         startX + (endX - startX) * progress;
+    final double lineStartX = startX + 18;
 
     canvas.drawLine(
-      Offset(startX, centerY),
+      Offset(lineStartX, centerY),
       Offset(progressX, centerY),
       Paint()
         ..color = Colors.white
-        ..strokeWidth = 10
+        ..strokeWidth = 11.w
         ..strokeCap = StrokeCap.round,
     );
 
@@ -128,11 +131,11 @@ class ThreeCircleTrackShape extends SliderTrackShape {
       Offset(progressX, centerY),
       Paint()
         ..color = activeColor
-        ..strokeWidth = 5
+        ..strokeWidth = 8.w
         ..strokeCap = StrokeCap.round,
     );
 
-    const double circleRadius = 7;
+    const double circleRadius = 15;
 
     for (int i = 0; i < 3; i++) {
       final int stageNumber = i * 2 + 1;
@@ -147,13 +150,31 @@ class ThreeCircleTrackShape extends SliderTrackShape {
           ..style = PaintingStyle.fill,
       );
 
+      isCompleted ? canvas.drawCircle(
+        Offset(circleX, centerY),
+        circleRadius,
+        Paint()
+          ..color = white
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 11,
+      ) : SizedBox();
+
       canvas.drawCircle(
         Offset(circleX, centerY),
         circleRadius,
         Paint()
-          ..color = Colors.white
+          ..color = inactiveColor
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.5,
+          ..strokeWidth = 5,
+      );
+
+      canvas.drawLine(
+        Offset(startX, centerY),
+        Offset(progressX, centerY),
+        Paint()
+          ..color = activeColor
+          ..strokeWidth = 8.w
+          ..strokeCap = StrokeCap.round,
       );
     }
   }

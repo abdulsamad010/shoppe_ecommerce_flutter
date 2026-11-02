@@ -27,7 +27,6 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
   String? cartProductId;
   int? productIndex;
 
-  bool isSubmitted=false;
 
   final con=TextEditingController();
 
@@ -51,10 +50,28 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
     return BlocConsumer<AppBloc,AppState>(
 
       listener: (context, state) {
-        if(isSubmitted==true){
 
+
+        if(state.isProceed){
+
+          showDialog(context: context,barrierDismissible: false, builder: (context) {
+            return AlertDialog(
+              backgroundColor: white,
+              content: Container(
+                  height: 50.h,
+                  width: 50.w,
+                  child: Center(
+                      child: CircularProgressIndicator(color: blue,))),
+            );
+          });
+        }
+        
+        
+        if(state.isSubmitted==true){
+          Navigator.pop(context);
           showDialog(barrierDismissible: false,context: context, builder: (context){
             return AlertDialog(
+              backgroundColor: white,
               clipBehavior: Clip.none,
               title: Center(
                 child: Transform.translate(
@@ -78,42 +95,54 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
                               shape: BoxShape.circle,
                               color: white
                           ),
-                          child: Center(child: SvgPicture.asset("assets/icons/Component 5 – 2.svg",height: 50.w,width: 50.w,))),
+                          child: Center(child: SvgPicture.asset("assets/icons/Component 5 – 3 (1).svg",height: 50.w,width: 50.w,))),
 
-                      SizedBox(height: 8.h),
+                      //SizedBox(height: 8.h),
 
-                      Text("Done!",style: GoogleFonts.raleway(
-                        fontSize: 19,
-                        fontWeight: FontWeight(700),
-                      ),),
+                      Transform.translate(
+                        offset: Offset(0, 20),
+                        child: Column(
+                          children: [
 
-                      SizedBox(height: 8.h,width: 347.w,),
+                            Text("Done!",style: GoogleFonts.raleway(
+                              fontSize: 19,
+                              fontWeight: FontWeight(700),
+                            ),),
 
-                      Text("Thank you for your review",style: GoogleFonts.nunitoSans(
-                        fontSize: 13,
-                        fontWeight: FontWeight(600),
-                      ),),
+                            SizedBox(height: 8.h,width: 347.w,),
+
+                            Text("Thank you for your review",style: GoogleFonts.nunitoSans(
+                              fontSize: 13,
+                              fontWeight: FontWeight(600),
+                            ),),
 
 
-                      SizedBox(height: 12.h,),
+                            Transform.translate(
+                              offset: Offset(0, 18),
+                              child: SizedBox(
+                                width: 225.w,
+                                height: 34.h,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(backgroundColor: blue,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(11.r)
+                                        )
+                                    ),
 
-                      SizedBox(
-                        width: 225.w,
-                        height: 34.h,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: blue,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(11.r)
-                                )
-                            ),
-                            onPressed: (){
+                                    onPressed: (){
 
-                              Navigator.pop(context);
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()), (route) => true);
-                              context.read<AppBloc>().add(ScreensNavigation(index: 0));
-                              isSubmitted=false;
-                            }, child: Text("Go to Home",style: AppTextStyles.b2.copyWith(color: white),)),
+                                      Navigator.pop(context);
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()), (route) => true);
+                                      context.read<AppBloc>().add(ScreensNavigation(index: 0));
+                                    }, child: Text("Go to Home",style: AppTextStyles.b2.copyWith(color: white),)),
+                              ),
+                            )
+
+                          ],
+                        ),
                       )
+
+
                     ],
                   ),
                 ),
@@ -239,185 +268,193 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
                         width: 86.w,
                         child: ElevatedButton(onPressed: (){
 
-                          state.ordersPlaced[widget.index]["order_rating"].isEmpty ?
+                          state.ordersPlaced[widget.index]["order_rating"]==null || state.ordersPlaced[widget.index]["order_rating"].isEmpty ?
                           showModalBottomSheet(backgroundColor: white,
+                              useSafeArea: true,
                               context: context, builder: (context){
                                 double selectedRating = 0.0;
-                            return Column(
-                              children: [
-                                
-                                Container(
-                                  height: 80.h,
-                                  width: 375.w,
-                                  padding: EdgeInsets.all(12.w),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFF8FAFF),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(9.r),
-                                      topRight: Radius.circular(9.r)
-                                    )
-                                  ),
-                                  child: Text("Review",style: GoogleFonts.raleway(
-                                      fontWeight: FontWeight(700),
-                                      fontSize: 22,
-                                      color: black
-                                  ),),
-                                ),
-                                
-                                Padding(
-                                  padding:  EdgeInsets.all(16.w),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                            return Padding(
+                              padding:  EdgeInsets.only(
+                                bottom: MediaQuery.of(context).viewInsets.bottom,
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
 
-                                      Row(
+                                    Container(
+                                      height: 80.h,
+                                      width: 375.w,
+                                      padding: EdgeInsets.all(12.w),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFF8FAFF),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(9.r),
+                                          topRight: Radius.circular(9.r)
+                                        )
+                                      ),
+                                      child: Text("Review",style: GoogleFonts.raleway(
+                                          fontWeight: FontWeight(700),
+                                          fontSize: 22,
+                                          color: black
+                                      ),),
+                                    ),
+
+                                    Padding(
+                                      padding:  EdgeInsets.all(16.w),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            height: 40.w,
-                                            width: 40.w,
-                                            padding: EdgeInsets.all(2.w),
-                                            clipBehavior: Clip.hardEdge,
-                                            decoration: BoxDecoration(
-                                                color: white,
-                                                shape: BoxShape.circle,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: black.withOpacity(0.16),
-                                                    blurRadius: 15,
-                                                  ),
-                                                ]
-                                            ),
-                                            child: Image.network("${state.profileImage}",fit: BoxFit.cover,),
-                                          ),
 
-                                          SizedBox(width: 6.w,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          Row(
                                             children: [
+                                              Container(
+                                                height: 40.w,
+                                                width: 40.w,
+                                                padding: EdgeInsets.all(2.w),
+                                                clipBehavior: Clip.hardEdge,
+                                                decoration: BoxDecoration(
+                                                    color: white,
+                                                    shape: BoxShape.circle,
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: black.withOpacity(0.16),
+                                                        blurRadius: 15,
+                                                      ),
+                                                    ]
+                                                ),
+                                                child: Image.network("${state.profileImage}",fit: BoxFit.cover,),
+                                              ),
 
-                                              Text("Please Write Your Review for",style: GoogleFonts.nunitoSans(
-                                                  fontWeight: FontWeight(400),
-                                                  fontSize: 12,
-                                                  color: black
-                                              ),),
+                                              SizedBox(width: 6.w,),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
 
-                                              SizedBox(height: 8.w,),
+                                                  Text("Please Write Your Review for",style: GoogleFonts.nunitoSans(
+                                                      fontWeight: FontWeight(400),
+                                                      fontSize: 12,
+                                                      color: black
+                                                  ),),
 
-                                              Text("Order #${state.ordersPlaced[widget.index]["order_id"]}",style: GoogleFonts.raleway(
-                                                  fontWeight: FontWeight(700),
-                                                  fontSize: 14,
-                                                  color: black
-                                              ),),
+                                                  SizedBox(height: 8.w,),
+
+                                                  Text("Order #${state.ordersPlaced[widget.index]["order_id"]}",style: GoogleFonts.raleway(
+                                                      fontWeight: FontWeight(700),
+                                                      fontSize: 14,
+                                                      color: black
+                                                  ),),
+
+                                                ],
+                                              )
+
 
                                             ],
-                                          )
+                                          ),
 
+                                          SizedBox(height: 8.h,),
+
+                                          SizedBox(
+                                            height: 35,
+                                            child: RatingBar.builder(
+                                              itemCount: 5,
+                                              initialRating: 1,
+                                              itemPadding: EdgeInsets.only(right: 3.w),
+                                              itemSize: 35.w,
+                                              minRating: 1,
+                                              maxRating: 5,
+                                              allowHalfRating: false,
+                                              onRatingUpdate: (v) {
+
+                                                selectedRating=v;
+
+                                                print("Selected rating: $v");
+                                                try {
+                                                  context.read<AppBloc>().add(
+                                                      ChangeRating(
+                                                          value: v.toDouble()));
+                                                }catch(e){
+                                                  print("exception");
+                                                }
+                                                print("2. ChangeRating dispatched");
+                                              },
+                                              //unratedColor:  Color(0xFFECA61B).withOpacity(0.5),
+                                              itemBuilder: (context, index) {
+                                                return Icon(
+                                                  Icons.star_border,
+                                                  color: Color(0xFFECA61B),
+                                                );
+                                              },
+                                            ),
+                                          ),
+
+                                          SizedBox(height: 8.h,),
+
+                                          SizedBox(
+                                            height: 100.w,
+                                            width: 335.w,
+                                            child: TextField(
+                                              controller: con,
+                                              expands: true,
+                                              maxLines: null,
+                                              textAlignVertical: TextAlignVertical.top,
+                                              decoration: InputDecoration(
+                                                hint: Text("Your comment",style: GoogleFonts.raleway(
+                                                  fontWeight: FontWeight(500),
+                                                  fontSize: 16
+                                                ),),
+                                                filled: true,
+                                                fillColor: Color(0xFFF1F4FE),
+                                                border: OutlineInputBorder(
+                                                  borderSide: BorderSide.none
+                                                ),
+                                                disabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.circular(9.r)
+                                                )
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(height: 16.w,),
+
+                                          SizedBox(
+                                            height: 40.h,
+                                            width: 325.w,
+                                            child: ElevatedButton(onPressed: (){
+
+                                              print(con.text);
+
+                                              print(selectedRating);
+
+                                              if(con!=null && con.text.trim().length>2 && selectedRating>0) {
+
+                                                
+                                                context.read<AppBloc>().add(
+                                                    SaveRating(ratingValue: con
+                                                        .text,ordersPlacedIndex:widget.index));
+
+
+                                              }
+                                            },
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: blue,
+                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.r))
+                                                ),
+                                                child: Text("Say it!",style: GoogleFonts.nunitoSans(
+                                                    fontWeight: FontWeight(300),
+                                                    fontSize: 16,
+                                                    color: Color(0xFFF3F3F3)
+                                                ),)),
+                                          ),
+
+                                          SizedBox(height: 16.w,),
 
                                         ],
                                       ),
-
-                                      SizedBox(height: 8.h,),
-
-                                      SizedBox(
-                                        height: 35,
-                                        child: RatingBar.builder(
-                                          itemCount: 5,
-                                          initialRating: 1,
-                                          itemPadding: EdgeInsets.only(right: 3.w),
-                                          itemSize: 35.w,
-                                          minRating: 1,
-                                          maxRating: 5,
-                                          allowHalfRating: false,
-                                          onRatingUpdate: (v) {
-
-                                            selectedRating=v;
-
-                                            print("Selected rating: $v");
-                                            try {
-                                              context.read<AppBloc>().add(
-                                                  ChangeRating(
-                                                      value: v.toDouble()));
-                                            }catch(e){
-                                              print("exception");
-                                            }
-                                            print("2. ChangeRating dispatched");
-                                          },
-                                          //unratedColor:  Color(0xFFECA61B).withOpacity(0.5),
-                                          itemBuilder: (context, index) {
-                                            return Icon(
-                                              Icons.star,
-                                              color: Color(0xFFECA61B),
-                                            );
-                                          },
-                                        ),
-                                      ),
-
-                                      SizedBox(height: 8.h,),
-
-                                      SizedBox(
-                                        height: 100.w,
-                                        width: 335.w,
-                                        child: TextField(
-                                          controller: con,
-                                          expands: true,
-                                          maxLines: null,
-                                          textAlignVertical: TextAlignVertical.top,
-                                          decoration: InputDecoration(
-                                            hint: Text("Your comment",style: GoogleFonts.raleway(
-                                              fontWeight: FontWeight(500),
-                                              fontSize: 16
-                                            ),),
-                                            filled: true,
-                                            fillColor: Color(0xFFF1F4FE),
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide.none
-                                            ),
-                                            disabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                            borderRadius: BorderRadius.circular(9.r)
-                                            )
-                                          ),
-                                        ),
-                                      ),
-
-                                      SizedBox(height: 16.w,),
-
-                                      SizedBox(
-                                        height: 40.h,
-                                        width: 325.w,
-                                        child: ElevatedButton(onPressed: (){
-
-                                          print(con.text);
-
-                                          print(selectedRating);
-
-                                          if(con!=null && con.text.trim().length>2 && selectedRating>0) {
-
-                                            isSubmitted = true;
-                                            context.read<AppBloc>().add(
-                                                SaveRating(ratingValue: con
-                                                    .text,ordersPlacedIndex:widget.index));
-
-
-                                          }
-                                        },
-                                            style: ElevatedButton.styleFrom(
-                                                backgroundColor: blue,
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.r))
-                                            ),
-                                            child: Text("Say it!",style: GoogleFonts.nunitoSans(
-                                                fontWeight: FontWeight(300),
-                                                fontSize: 16,
-                                                color: Color(0xFFF3F3F3)
-                                            ),)),
-                                      ),
-
-                                      SizedBox(height: 16.w,),
-                                
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             );
                           })
                           :
@@ -431,7 +468,7 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
                                   color: blue,
                                 ))
                             ),
-                            child: Text("${state.ordersPlaced[widget.index]["order_rating"].isEmpty ?  "Review":"Reviewed"}",style: GoogleFonts.raleway(
+                            child: Text("${state.ordersPlaced[widget.index]["order_rating"]==null || state.ordersPlaced[widget.index]["order_rating"].isEmpty ?  "Review":"Reviewed"}",style: GoogleFonts.raleway(
                                 fontWeight: FontWeight(500),
                                 color: blue,
                                 fontSize: 8
