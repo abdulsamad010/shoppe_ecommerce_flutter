@@ -16,6 +16,9 @@ class AppState{
   final String profileImage;
   final String email=FirebaseAuth.instance.currentUser!=null ? FirebaseAuth.instance.currentUser!.email! : "";
   final double orderRaiting;
+  final bool isSubmitted;
+  final String status;
+  final Map<String,dynamic> flashSale;
   final List<Map<String,dynamic>> ordersPlaced;
   final int? voucherUsedIndex;
   final int selectedDeliveryIndex;
@@ -25,6 +28,7 @@ class AppState{
   final String lEmail,lPassword;
   List<String> searchHistory;
   XFile? picker;
+  bool isProceed;
   final int flashSaleIndex;
   final List<Map<String,dynamic>> categories;
   Map<String, List<String>> subCategories;
@@ -40,10 +44,13 @@ class AppState{
   final bool isAccountDeleted,isNeedToLogin;
 
   AppState({
+    required this.flashSale,
+    this.status="",
     this.flashSaleIndex=0,
     required this.subCategories,
     required this.filteredProducts,
     required this.filters,
+    this.isProceed=false,this.isSubmitted=false,
     this.isSignout=false,
     this.isNeedToLogin=false,
     this.isAccountDeleted=false,
@@ -58,12 +65,7 @@ class AppState{
     required this.contact,
     required this.address,
     required this.favoriteProductsIds,
-    this.cartProgress=const{
-      "productId":null,
-      "quantity":null,
-      "size":null,
-      "color":null
-    },
+    required this.cartProgress,
     required this.cart,
     required this.lastSearch,
     required this.searchHistory,

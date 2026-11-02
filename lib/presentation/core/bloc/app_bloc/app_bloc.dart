@@ -17,6 +17,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final getFoodsObject;
   AppBloc({required this.getFoodsObject}) : super(AppState(
     cart: [],
+    flashSale: {},
+      cartProgress: {},
     filteredProducts: [],
     filters: {},
       subCategories: {},
@@ -92,6 +94,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<ChangeFlag>((event, emit) {
       emit(AppState(
+        cartProgress:state.cartProgress,
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -123,6 +127,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 
     on<GetProducts>((event, emit)async {
+      final flashSale1=await getFoodsObject.fetchFlashSale();
+
       final vouchers1=await getFoodsObject.fetchVoucher();
       final delivery1=await getFoodsObject.fetchDelivery();
 
@@ -272,7 +278,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       List<Food> fleshSalesProducts1=[];
       for(int k=0;k<productsOrg.length;k++) {
         index3=-1;
-        products3=-1;
+        products3=0;
         for (int i = 0; i < productsOrg.length; i++) {
           if (products3 < productsOrg[i].discountPercentage && !(fleshSalesProducts1.contains(productsOrg[i]))) {
             products3 = productsOrg[i].discountPercentage;
@@ -280,21 +286,21 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           }
         }
 
-        if(products3==-1){
+        if(products3==0){
           break;
         }
         fleshSalesProducts1.add(productsOrg[index3]);
-        if(fleshSalesProducts1.length==5){
-          break;
-        }
+
       }
 
 
 
 
       emit(AppState(
+        flashSale: flashSale1,
           subCategories: subCategories,
           filters: state.filters,
+          cartProgress:state.cartProgress,
           filteredProducts: state.filteredProducts,
           orderRaiting: state.orderRaiting,
           ordersPlaced: state.ordersPlaced,
@@ -372,6 +378,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 
       emit(AppState(
+        flashSale: state.flashSale,
         flashSaleIndex: state.flashSaleIndex,
         subCategories: state.subCategories,
         filters: state.filters,
@@ -385,6 +392,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
+        cartProgress:state.cartProgress,
         lastSearch: state.lastSearch,
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
@@ -407,6 +415,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<SelectFlashSales>((event, emit) {
       emit(AppState(
+        flashSale: state.flashSale,
         flashSaleIndex: event.percentIndex,
         subCategories: state.subCategories,
         filters: state.filters,
@@ -416,6 +425,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         profileImage: state.profileImage,
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
+        cartProgress:state.cartProgress,
         contact: state.contact,
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
@@ -468,6 +478,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
 
       emit(AppState(
+        flashSale: state.flashSale,
          orderRaiting: state.orderRaiting,
         deliveryDate: state.deliveryDate,
         ordersPlaced: state.ordersPlaced,
@@ -477,6 +488,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
         contact: state.contact,
+        cartProgress:state.cartProgress,
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
@@ -513,10 +525,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<ClearFilter>((event, emit) async {
 
       emit(AppState(
+        flashSale: state.flashSale,
         orderRaiting: state.orderRaiting,
         deliveryDate: state.deliveryDate,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
+        cartProgress:state.cartProgress,
         voucherUsedIndex: state.voucherUsedIndex,
         selectedDeliveryIndex: state.selectedDeliveryIndex,
         delivery_methods: state.delivery_methods,
@@ -556,6 +570,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<ChangeVisibility>((event, emit) {
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -565,6 +580,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
         contact: state.contact,
+        cartProgress:state.cartProgress,
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
@@ -592,8 +608,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<ChangeDeliveryIndex>((event, emit) {
       String deliveryDate1=DateTime.now().add(Duration(days: state.delivery_methods[event.index]["max_days"])).toString().substring(0,10);
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
+        cartProgress:state.cartProgress,
         filteredProducts: state.filteredProducts,
         orderRaiting: state.orderRaiting,
         deliveryDate: deliveryDate1,
@@ -642,6 +660,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       print("after change raiing bloc${event.value}");
 
         emit(AppState(
+          flashSale: state.flashSale,
+          cartProgress:state.cartProgress,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -685,18 +705,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
       print("****bloc");
 
-      await getFoodsObject.storeReview({
-        "rating":state.orderRaiting,
-        "review":event.ratingValue,
-        "reviewerImage":state.profileImage,
-        "order_id":state.ordersPlaced[event.ordersPlacedIndex]["order_id"]
-      });
-
-      print("bloc completed");
-
-      add(GetProducts());
-
       emit(AppState(
+        flashSale: state.flashSale,
+        isProceed: true,
+        cartProgress:state.cartProgress,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -728,11 +740,102 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
         suffixIcon: state.suffixIcon,
       ));
+
+
+
+
+
+      await getFoodsObject.storeReview({
+        "rating":state.orderRaiting,
+        "review":event.ratingValue,
+        "reviewerImage":state.profileImage,
+        "order_id":state.ordersPlaced[event.ordersPlacedIndex]["order_id"]
+      });
+
+      print("bloc completed");
+
+      add(GetProducts());
+
+      emit(AppState(
+        flashSale: state.flashSale,
+        isProceed: false,
+        isSubmitted: true,
+        subCategories: state.subCategories,
+        filters: state.filters,
+        filteredProducts: state.filteredProducts,
+        orderRaiting: state.orderRaiting,
+        ordersPlaced: state.ordersPlaced,
+        profileImage: state.profileImage,
+        voucherUsedIndex: state.voucherUsedIndex,
+        selectedDeliveryIndex: state.selectedDeliveryIndex,
+        delivery_methods: state.delivery_methods,
+        voucher: state.voucher,
+        cartProgress:state.cartProgress,
+        contact: state.contact,
+        address: state.address,
+        favoriteProductsIds: state.favoriteProductsIds,
+        cart: state.cart,
+        lastSearch: state.lastSearch,
+        searchHistory: state.searchHistory,
+        searchedProducts: state.searchedProducts,
+        fleshSalesProducts: state.fleshSalesProducts,
+        sGender: state.sGender,
+        sImagePicker: state.sImagePicker,
+        categories: state.categories,
+        topSoldProducts: state.topSoldProducts,
+        newArrivalProducts: state.newArrivalProducts,
+        products: state.products,
+        screenIndex: state.screenIndex,
+        loginStatus: state.loginStatus,
+        signupStatus: state.signupStatus,
+        sPhone: state.sPhone,
+        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        suffixIcon: state.suffixIcon,
+      ));
     });
 
 
 
     on<StoreOrder>((event, emit) async{
+
+
+      emit(AppState(
+        flashSale: state.flashSale,
+        isProceed: true,
+        cartProgress:state.cartProgress,
+        subCategories: state.subCategories,
+        filters: state.filters,
+        filteredProducts: state.filteredProducts,
+        ordersPlaced: state.ordersPlaced,
+        profileImage: state.profileImage,
+        voucherUsedIndex: null,
+        delivery_methods: state.delivery_methods,
+        voucher: state.voucher,
+        contact: state.contact,
+        address: state.address,
+        favoriteProductsIds: state.favoriteProductsIds,
+        cart: state.cart,
+        orderRaiting: state.orderRaiting,
+        lastSearch: state.lastSearch,
+        searchHistory: state.searchHistory,
+        searchedProducts: state.searchedProducts,
+        fleshSalesProducts: state.fleshSalesProducts,
+        sGender: state.sGender,
+        sImagePicker: state.sImagePicker,
+        categories: state.categories,
+        topSoldProducts: state.topSoldProducts,
+        newArrivalProducts: state.newArrivalProducts,
+        products: state.products,
+        screenIndex: state.screenIndex,
+        loginStatus: state.loginStatus,
+        signupStatus: state.signupStatus,
+        sPhone: state.sPhone,
+        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        suffixIcon:state.suffixIcon,
+      ));
+
+
+
       await getFoodsObject.storeOrder({
         "total_cost":event.totalCost,
         "user_id":FirebaseAuth.instance.currentUser!.uid,
@@ -757,6 +860,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       List<Map<String,dynamic>> cart1=await getFoodsObject.fetchCart();
 
       emit(AppState(
+        flashSale: state.flashSale,
+        isProceed: false,
+        cartProgress:state.cartProgress,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -793,6 +899,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<StoreVoucherInApp>((event, emit) async{
       emit(AppState(
+        flashSale: state.flashSale,
+        cartProgress:state.cartProgress,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -829,10 +937,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<RemoveVoucherInApp>((event, emit) async{
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
         orderRaiting: state.orderRaiting,
+        cartProgress:state.cartProgress,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
         voucherUsedIndex:null,
@@ -871,6 +981,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       cart1[event.cartIndex]["quantity"] = event.quantity;
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -918,8 +1029,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 print("${event.quantity}");
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
+
         filteredProducts: state.filteredProducts,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
@@ -962,6 +1075,7 @@ print("${event.quantity}");
 
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1003,6 +1117,7 @@ print("${event.quantity}");
 
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1048,6 +1163,7 @@ print("${event.quantity}");
       final cart2=await getFoodsObject.fetchCart();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1060,6 +1176,7 @@ print("${event.quantity}");
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: cart2,
+        cartProgress:state.cartProgress,
         lastSearch: state.lastSearch,
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
@@ -1089,6 +1206,7 @@ print("${event.quantity}");
       final cart2=await getFoodsObject.fetchCart();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1101,6 +1219,7 @@ print("${event.quantity}");
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: cart2,
+        cartProgress:state.cartProgress,
         lastSearch: state.lastSearch,
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
@@ -1130,8 +1249,10 @@ print("${event.quantity}");
       final cart2=await getFoodsObject.fetchCart();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
+        cartProgress:state.cartProgress,
         filteredProducts: state.filteredProducts,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
@@ -1171,8 +1292,10 @@ print("${event.quantity}");
       final cart2=await getFoodsObject.fetchCart();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
+        cartProgress:state.cartProgress,
         filteredProducts: state.filteredProducts,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
@@ -1210,6 +1333,8 @@ print("${event.quantity}");
        FirebaseAuth.instance.signOut();
      }
        emit(AppState(
+         flashSale: state.flashSale,
+         cartProgress:state.cartProgress,
          subCategories: state.subCategories,
          filters: state.filters,
          filteredProducts: state.filteredProducts,
@@ -1268,6 +1393,8 @@ print("${event.quantity}");
       final cart2=await getFoodsObject.fetchCart();
 
       emit(AppState(
+        flashSale: state.flashSale,
+        cartProgress:state.cartProgress,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1316,6 +1443,8 @@ print("${event.quantity}");
       }
 
       emit(AppState(
+          flashSale: state.flashSale,
+          cartProgress:state.cartProgress,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -1351,6 +1480,8 @@ print("${event.quantity}");
 
 
       emit(AppState(
+          cartProgress:state.cartProgress,
+          flashSale: state.flashSale,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -1393,6 +1524,8 @@ print("${event.quantity}");
         (await getFoodsObject.callFetchSearchHistory())["searchHistory"] ?? [],
       );
       emit(AppState(
+          flashSale: state.flashSale,
+          cartProgress:state.cartProgress,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -1427,21 +1560,18 @@ print("${event.quantity}");
 
 
 
-
-
-
-
-
     on<ClearSearch>((event, emit) {
 
 
       emit(AppState(
+          flashSale: state.flashSale,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
           ordersPlaced: state.ordersPlaced,
           profileImage: state.profileImage,
           contact: state.contact,
+          cartProgress:state.cartProgress,
           delivery_methods: state.delivery_methods,
           voucher: state.voucher,
           address: state.address,
@@ -1472,9 +1602,10 @@ print("${event.quantity}");
 
 
     on<SetEmail>((event, emit) {
-      emit(AppState(
+      emit(AppState(flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
+        cartProgress:state.cartProgress,
         filteredProducts: state.filteredProducts,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
@@ -1508,12 +1639,14 @@ print("${event.quantity}");
 
     on<SetPassword>((event, emit) {
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
         contact: state.contact,
+        cartProgress:state.cartProgress,
         orderRaiting: state.orderRaiting,
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
@@ -1546,6 +1679,7 @@ print("${event.quantity}");
       bool isNeedToLogin1=await getFoodsObject.deleteUser();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1554,6 +1688,7 @@ print("${event.quantity}");
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
         contact: state.contact,
+        cartProgress:state.cartProgress,
         orderRaiting: state.orderRaiting,
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
@@ -1584,6 +1719,8 @@ print("${event.quantity}");
     on<SetSignup>((event, emit) async{
 
       emit(AppState(
+        flashSale: state.flashSale,
+        cartProgress:state.cartProgress,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1638,6 +1775,7 @@ print("${event.quantity}");
 
 
         emit(AppState(
+          flashSale: state.flashSale,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -1656,6 +1794,7 @@ print("${event.quantity}");
           fleshSalesProducts: state.fleshSalesProducts,
           picker: state.picker,
           sGender: event.sGender,
+          cartProgress:state.cartProgress,
           sImagePicker: result["secure_url"],
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
@@ -1724,6 +1863,9 @@ print("${event.quantity}");
       }
 
       emit(AppState(
+        flashSale: state.flashSale,
+        cartProgress:state.cartProgress,
+        status: status,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1766,6 +1908,7 @@ print("${event.quantity}");
       String address1=await getFoodsObject.fetchAddress();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1775,6 +1918,7 @@ print("${event.quantity}");
         voucherUsedIndex: state.voucherUsedIndex,
         selectedDeliveryIndex: state.selectedDeliveryIndex,
         contact: state.contact,
+        cartProgress:state.cartProgress,
         orderRaiting: state.orderRaiting,
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
@@ -1810,6 +1954,7 @@ print("${event.quantity}");
       String contact1=await getFoodsObject.fetchContact();
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1830,6 +1975,7 @@ print("${event.quantity}");
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
         sGender: state.sGender,
+        cartProgress:state.cartProgress,
         sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
@@ -1855,6 +2001,8 @@ print("${event.quantity}");
         String contact1 = await getFoodsObject.fetchContact();
 
         emit(AppState(
+          flashSale: state.flashSale,
+          cartProgress:state.cartProgress,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -1891,6 +2039,7 @@ print("${event.quantity}");
         String address1 = await getFoodsObject.fetchAddress();
 
         emit(AppState(
+          flashSale: state.flashSale,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -1915,6 +2064,7 @@ print("${event.quantity}");
           topSoldProducts: state.topSoldProducts,
           newArrivalProducts: state.newArrivalProducts,
           products: state.products,
+          cartProgress:state.cartProgress,
           screenIndex: state.screenIndex,
           loginStatus: state.loginStatus,
           signupStatus: "",
@@ -1932,6 +2082,7 @@ print("${event.quantity}");
 
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -1942,6 +2093,7 @@ print("${event.quantity}");
         voucher: state.voucher,
         orderRaiting: state.orderRaiting,
         address: state.address,
+        cartProgress:state.cartProgress,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
         lastSearch: state.lastSearch,
@@ -1968,12 +2120,14 @@ print("${event.quantity}");
     on<Login>((event, emit) async{
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
         ordersPlaced: state.ordersPlaced,
         profileImage: state.profileImage,
         contact: state.contact,
+        cartProgress:state.cartProgress,
         orderRaiting: state.orderRaiting,
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
@@ -2013,6 +2167,7 @@ print("${event.quantity}");
       }
 
         emit(AppState(
+          flashSale: state.flashSale,
           subCategories: state.subCategories,
           filters: state.filters,
           filteredProducts: state.filteredProducts,
@@ -2030,6 +2185,7 @@ print("${event.quantity}");
           searchedProducts: state.searchedProducts,
           fleshSalesProducts: state.fleshSalesProducts,
           sGender: state.sGender,
+          cartProgress:state.cartProgress,
           sImagePicker: state.sImagePicker,
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
@@ -2050,6 +2206,7 @@ print("${event.quantity}");
     on<CleanLoginStatus>((event, emit) async{
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -2059,6 +2216,7 @@ print("${event.quantity}");
         contact: state.contact,
         delivery_methods: state.delivery_methods,
         voucher: state.voucher,
+        cartProgress:state.cartProgress,
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
@@ -2086,6 +2244,7 @@ print("${event.quantity}");
     on<ScreensNavigation>((event, emit) async{
 
       emit(AppState(
+        cartProgress:state.cartProgress,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -2098,6 +2257,7 @@ print("${event.quantity}");
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
+        flashSale: state.flashSale,
         lastSearch: state.lastSearch,
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
@@ -2130,6 +2290,7 @@ print("${event.quantity}");
       }
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -2142,6 +2303,7 @@ print("${event.quantity}");
         address: state.address,
         favoriteProductsIds: state.favoriteProductsIds,
         cart: state.cart,
+        cartProgress:state.cartProgress,
         lastSearch: state.lastSearch,
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
@@ -2166,6 +2328,7 @@ print("${event.quantity}");
     on<Picker>((event, emit) async{
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -2184,6 +2347,7 @@ print("${event.quantity}");
         fleshSalesProducts: state.fleshSalesProducts,
         sGender: state.sGender,
         picker: event.picker,
+        cartProgress:state.cartProgress,
         sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
@@ -2209,6 +2373,7 @@ print("${event.quantity}");
       String profileImage1 = result["profileImageUrl"];
 
       emit(AppState(
+        flashSale: state.flashSale,
         subCategories: state.subCategories,
         filters: state.filters,
         filteredProducts: state.filteredProducts,
@@ -2226,7 +2391,9 @@ print("${event.quantity}");
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
         sGender: state.sGender,
+        cartProgress:state.cartProgress,
         picker: state.picker,
+
         sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
