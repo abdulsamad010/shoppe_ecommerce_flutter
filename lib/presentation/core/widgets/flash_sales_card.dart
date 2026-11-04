@@ -40,6 +40,8 @@ class FlashSalesCard extends StatelessWidget {
           fit: BoxFit.cover,
             height: 103.h,
             width: 99.w,
+            errorBuilder: (context, error, stackTrace) =>
+            SizedBox(),
           ),
         ),
 
