@@ -9,6 +9,7 @@ import 'package:shoppe_ecommerce_flutter/data/repositories/food_repository_impl.
 import 'package:shoppe_ecommerce_flutter/domain/usecases/get_foods.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_bloc.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/features/profile/bloc/profile_bloc.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/shop/shop_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/start/start_screen.dart';
 import 'firebase_options.dart';
@@ -38,8 +39,11 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return BlocProvider(
-            create:(context)=>AppBloc(getFoodsObject:getFoodsObject),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create:(context)=>AppBloc(getFoodsObject:getFoodsObject),),
+          BlocProvider(create:(context)=>ProfileBloc(getFoodsObject: getFoodsObject))
+            ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
                     title: 'shoppe_ecommerce_flutter',
