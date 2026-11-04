@@ -45,7 +45,9 @@ class JustForYouCard extends StatelessWidget {
               child: Image.network("$image",
                 fit: BoxFit.cover,
                 height: 171.h,
-                width: 155.w,),
+                width: 155.w,
+              errorBuilder: (context, error, stackTrace) => SizedBox(),
+              ),
             ),
           )),
 
