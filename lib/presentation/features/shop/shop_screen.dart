@@ -180,6 +180,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                     child: Stack(
                                         children:[
 
+
                                           Align(
                                             alignment: .centerRight,
                                             child: Padding(
@@ -211,7 +212,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                                 Text("Big Sale",style: AppTextStyles.h2.copyWith(
                                                     color: index==1? black:white
                                                 ),),
-                                                Text("Up to 50%",style: GoogleFonts.nunitoSans(
+                                                Text("Up to ${state.flashSale["discountPercentage"]}%",style: GoogleFonts.nunitoSans(
                                                   fontWeight: FontWeight(700),
                                                   fontSize: 12.sp,
                                                   color: index==1? black:white,
@@ -433,7 +434,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     width: 432.w,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.categories.length>3 ? 3 : state.categories.length,
+                        itemCount: state.newArrivalProducts.length>3 ? 3 : state.newArrivalProducts.length,
                         itemBuilder: (context,index){
                           return GestureDetector(
                             onTap: (){
