@@ -83,6 +83,7 @@ class _CategoriesFilteringScreenState
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
+
                                     Map<String, String> filters =
                                     Map.from(state.filters);
 
@@ -93,6 +94,7 @@ class _CategoriesFilteringScreenState
                                     );
                                   },
                                   child: Container(
+
                                     margin: const EdgeInsets.symmetric(
                                       horizontal: 3,
                                     ),
@@ -101,6 +103,7 @@ class _CategoriesFilteringScreenState
                                     ),
                                     decoration: BoxDecoration(
                                       color:
+
                                       state.filters['gender'] == gender
                                           ? const Color(0xffe9edff)
                                           : const Color(0xfff8f8f8),
@@ -112,12 +115,15 @@ class _CategoriesFilteringScreenState
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
+
                                     child: Text(
                                       gender,
                                       textAlign: TextAlign.center,
+
                                       style: TextStyle(
                                         fontSize: 12,
                                         color:
+
                                         state.filters['gender'] == gender
                                             ? const Color(0xff4169ff)
                                             : Colors.black,
@@ -142,11 +148,13 @@ class _CategoriesFilteringScreenState
                                   margin: const EdgeInsets.only(bottom: 6),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
+
                                     borderRadius: BorderRadius.circular(8),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.08),
                                         blurRadius: 4,
+
                                         offset: const Offset(0, 2),
                                       ),
                                     ],
@@ -154,15 +162,18 @@ class _CategoriesFilteringScreenState
                                   child: ExpansionTile(
                                     tilePadding: const EdgeInsets.symmetric(
                                       horizontal: 4,
+
                                     ),
                                     childrenPadding:
                                     const EdgeInsets.fromLTRB(0, 0, 0, 8),
 
                                     leading: ClipRRect(
+
                                       borderRadius: BorderRadius.circular(5),
                                       child: Image.network(
                                         state.categories[i]['img1'] ?? '',
                                         width: 32,
+
                                         height: 32,
                                         fit: BoxFit.cover,
                                         errorBuilder:
@@ -170,6 +181,7 @@ class _CategoriesFilteringScreenState
                                           return Container(
                                             width: 32,
                                             height: 32,
+
                                             color: Colors.grey.shade200,
                                             child: const Icon(
                                               Icons.image_not_supported,
@@ -196,9 +208,12 @@ class _CategoriesFilteringScreenState
                                         Map<String, String> filters =
                                         Map.from(state.filters);
 
+
+
                                         filters['category'] =
                                             state.categories[i]['name'] ?? '';
                                         filters['subCategory'] = '';
+
 
                                         context.read<AppBloc>().add(
                                           UpdateFilters(filters: filters),
@@ -238,6 +253,7 @@ class _CategoriesFilteringScreenState
                                             child: GridView.builder(
                                               shrinkWrap: true,
                                               physics:
+
                                                NeverScrollableScrollPhysics(),
                                               gridDelegate:
                                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -260,6 +276,8 @@ class _CategoriesFilteringScreenState
 
                                                 return GestureDetector(
                                                   onTap: () {
+
+
                                                     Map<String, String> filters =
                                                     Map.from(state.filters);
 
@@ -291,6 +309,7 @@ class _CategoriesFilteringScreenState
                                                           0xffffdddd,
                                                         ),
                                                       ),
+
                                                       borderRadius:
                                                       BorderRadius.circular(
                                                         7,
@@ -323,29 +342,25 @@ class _CategoriesFilteringScreenState
                   ),
                 ),
 
-                // Apply filters and navigate to ShopScreen
+
+
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                  padding:  EdgeInsets.fromLTRB(12, 10, 12, 12),
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ShopScreen(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff4169ff),
+                        backgroundColor:  Color(0xff4169ff),
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding:  EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
+                      child:  Text(
                         'Apply Filters',
                         style: TextStyle(
                           fontSize: 14,
