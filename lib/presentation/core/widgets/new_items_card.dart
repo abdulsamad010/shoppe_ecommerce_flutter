@@ -46,7 +46,8 @@ class NewItemsCard extends StatelessWidget {
                 child: Image.network("$image",
                   fit: BoxFit.cover,
                   height: 130.h,
-                  width: 130.w,),
+                  width: 130.w,
+                errorBuilder: (context, error, stackTrace) => SizedBox(),),
               ),
             )),
 
