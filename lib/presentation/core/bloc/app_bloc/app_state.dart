@@ -9,10 +9,10 @@ import '../../../../domain/entities/food.dart';
 class AppState{
   final List<Map<String,dynamic>> cart,delivery_methods,voucher;
   final Map<String,dynamic> cartProgress;
-  final String selectedLink,address,contact;
+
   final Widget suffixIcon;
-  final String deliveryDate;
-  final bool isAbscure,isSignout;
+
+  final bool isAbscure;
   final String profileImage;
   final String email=FirebaseAuth.instance.currentUser!=null ? FirebaseAuth.instance.currentUser!.email! : "";
   final double orderRaiting;
@@ -24,15 +24,12 @@ class AppState{
   final int selectedDeliveryIndex;
   final List<String> favoriteProductsIds;
   final List<Food> searchedProducts,fleshSalesProducts,products,topSoldProducts,newArrivalProducts;
-  final String signupStatus,loginStatus;
-  final String lEmail,lPassword;
   List<String> searchHistory;
-  XFile? picker;
   bool isProceed;
   final int flashSaleIndex;
   final List<Map<String,dynamic>> categories;
   Map<String, List<String>> subCategories;
-  final String sEmail,sPassword,sPhone,sImagePicker,sGender,lastSearch;
+  final String lastSearch;
   final int screenIndex;
   Map<String, String> filters = {
     'category': '',
@@ -41,9 +38,13 @@ class AppState{
   };
 
   List<Food> filteredProducts = [];
-  final bool isAccountDeleted,isNeedToLogin;
+  final String address,contact;
+  final String deliveryDate;
 
   AppState({
+    required this.contact,
+    required this.address,
+    this.deliveryDate="",
     required this.flashSale,
     this.status="",
     this.flashSaleIndex=0,
@@ -51,10 +52,6 @@ class AppState{
     required this.filteredProducts,
     required this.filters,
     this.isProceed=false,this.isSubmitted=false,
-    this.isSignout=false,
-    this.isNeedToLogin=false,
-    this.isAccountDeleted=false,
-    this.deliveryDate="",
     required this.orderRaiting,
     required this.ordersPlaced,
     required this.profileImage,
@@ -62,8 +59,7 @@ class AppState{
     this.selectedDeliveryIndex=0,
     required this.delivery_methods,
     required this.voucher,
-    required this.contact,
-    required this.address,
+
     required this.favoriteProductsIds,
     required this.cartProgress,
     required this.cart,
@@ -71,23 +67,15 @@ class AppState{
     required this.searchHistory,
     required this.searchedProducts,
     required this.fleshSalesProducts,
-    required this.sGender,
-    this.picker,
-    required this.sImagePicker,
+
     required this.categories,
     required this.newArrivalProducts,
     required this.topSoldProducts,
     required this.products,
     required this.screenIndex,
-    required this.loginStatus,
-    required this.signupStatus,
-    required this.sPhone,
-    required this.sEmail,
-    required this.sPassword,
-    required this.lEmail,
-    required this.lPassword,
+
     required this.suffixIcon,
-    required this.selectedLink,
+
     required this.isAbscure,
 });
 }

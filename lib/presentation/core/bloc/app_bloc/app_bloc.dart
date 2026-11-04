@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_event.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_state.dart';
 
-import '../../../../data/models/food_model.dart';
 import '../../../../domain/entities/food.dart';
 import '../../colors/app_colors.dart';
 
@@ -25,17 +24,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     orderRaiting: 0.0,
     ordersPlaced: [],
     profileImage: "",
+      contact: "",
+      address: "",
     delivery_methods: [],
     voucher: [],
-    contact: "",
-    address: "",
+
     favoriteProductsIds: [],
     lastSearch: "",
     searchHistory: [],
     searchedProducts: [],
     fleshSalesProducts: [],
-      sGender: "",
-      sImagePicker: "",
+
       categories: [
       {
         "name": "Clothing",
@@ -90,40 +89,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     topSoldProducts: [],
     products: [],
       screenIndex: 0,
-      loginStatus:"",signupStatus: "",sPhone: "",sEmail: "",sPassword: "",lEmail: "",lPassword: "1111111111",isAbscure: false,selectedLink: "assets/images/FLAG.png",suffixIcon :Icon(Icons.visibility_off,color: grey,))) {
+     isAbscure: false,suffixIcon :Icon(Icons.visibility_off,color: grey,))) {
 
-    on<ChangeFlag>((event, emit) {
-      emit(AppState(
-        cartProgress:state.cartProgress,
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        orderRaiting: state.orderRaiting,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        delivery_methods: state.delivery_methods,
-          voucher: state.voucher,
-          contact: state.contact,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-          screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: event.link,suffixIcon: state.suffixIcon));
-    });
+
 
 
     on<GetProducts>((event, emit)async {
@@ -315,17 +283,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           searchHistory: state.searchHistory,
           searchedProducts: state.searchedProducts,
           fleshSalesProducts:fleshSalesProducts1,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
           categories: categories1,
           topSoldProducts: topSoldProducts1,
           newArrivalProducts: newArrivalProducts1,
         products: productsOrg,
           screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,suffixIcon: state.suffixIcon));
+          isAbscure: state.isAbscure,
+          suffixIcon: state.suffixIcon));
     });
 
 
@@ -397,17 +361,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: fleshSalesProducts1,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure:state.isAbscure,selectedLink: state.selectedLink,
+       isAbscure:state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -434,17 +393,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure:state.isAbscure,selectedLink: state.selectedLink,
+       isAbscure:state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -496,22 +450,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,
-        sEmail: state.sEmail,
-        lPassword: state.lPassword,
-        lEmail: state.lEmail,
         isAbscure: state.isAbscure,
-        selectedLink: state.selectedLink,
         suffixIcon: state.suffixIcon,
 
         filters: event.filters,
@@ -543,24 +487,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,
-        sEmail: state.sEmail,
-        lPassword: state.lPassword,
-        lEmail: state.lEmail,
         isAbscure: state.isAbscure,
-        selectedLink: state.selectedLink,
         suffixIcon: state.suffixIcon,
-
         filters: {},
         filteredProducts: [],
         subCategories: state.subCategories,
@@ -588,17 +521,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: event.isAbscure,selectedLink: state.selectedLink,
+       isAbscure: event.isAbscure,
       suffixIcon: event.suffixIcon,
       ));
     });
@@ -629,17 +557,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -680,17 +603,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           searchHistory: state.searchHistory,
           searchedProducts: state.searchedProducts,
           fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
           newArrivalProducts: state.newArrivalProducts,
           products: state.products,
           screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+          isAbscure: state.isAbscure,
           suffixIcon: state.suffixIcon,
         ));
 
@@ -727,17 +645,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
 
@@ -779,17 +692,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+       isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -820,17 +728,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
 
@@ -880,17 +783,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -918,17 +816,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure:state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure:state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -956,17 +849,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure:state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure:state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -999,17 +887,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+       isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -1048,17 +931,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -1093,17 +971,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -1135,17 +1008,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
@@ -1181,17 +1049,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -1224,17 +1087,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -1267,17 +1125,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -1310,61 +1163,165 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
 
 
 
-    on<Logout>((event, emit) async{
+    on<LoadAddress>((event, emit) async{
 
-     if(FirebaseAuth.instance.currentUser!=null) {
-       FirebaseAuth.instance.signOut();
-     }
-       emit(AppState(
-         flashSale: state.flashSale,
-         cartProgress:state.cartProgress,
-         subCategories: state.subCategories,
-         filters: state.filters,
-         filteredProducts: state.filteredProducts,
-         isSignout:true,
-         ordersPlaced: state.ordersPlaced,
-         profileImage: state.profileImage,
-         contact: state.contact,
-         delivery_methods: state.delivery_methods,
-         voucher: state.voucher,
-         address: state.address,
-         orderRaiting: state.orderRaiting,
-         favoriteProductsIds: state.favoriteProductsIds,
-         cart: state.cart,
-         lastSearch: state.lastSearch,
-         searchHistory: state.searchHistory,
-         searchedProducts: state.searchedProducts,
-         fleshSalesProducts: state.fleshSalesProducts,
-         sGender: state.sGender,
-         sImagePicker: state.sImagePicker,
-         categories: state.categories,
-         topSoldProducts: state.topSoldProducts,
-         newArrivalProducts: state.newArrivalProducts,
-         products: state.products,
-         screenIndex: state.screenIndex,
-         loginStatus: state.loginStatus,
-         signupStatus: state.signupStatus,
-         sPhone: state.sPhone,
-         sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-         suffixIcon:state.suffixIcon,
-       ));
+      String deliveryDate1=DateTime.now().add(Duration(days: state.delivery_methods[state.selectedDeliveryIndex]["max_days"])).toString().substring(0,10);
+
+
+      String address1=await getFoodsObject.fetchAddress();
+
+      emit(AppState(
+        flashSale: state.flashSale,
+        subCategories: state.subCategories,
+        filters: state.filters,
+        filteredProducts: state.filteredProducts,
+        deliveryDate: deliveryDate1,
+        ordersPlaced: state.ordersPlaced,
+        profileImage: state.profileImage,
+        voucherUsedIndex: state.voucherUsedIndex,
+        selectedDeliveryIndex: state.selectedDeliveryIndex,
+        contact: state.contact,
+        cartProgress:state.cartProgress,
+        orderRaiting: state.orderRaiting,
+        delivery_methods: state.delivery_methods,
+        voucher: state.voucher,
+        address: address1,
+        favoriteProductsIds: state.favoriteProductsIds,
+        cart: state.cart,
+        lastSearch: state.lastSearch,
+        searchHistory: state.searchHistory,
+        searchedProducts: state.searchedProducts,
+        fleshSalesProducts: state.fleshSalesProducts,
+        categories: state.categories,
+        topSoldProducts: state.topSoldProducts,
+        newArrivalProducts: state.newArrivalProducts,
+        products: state.products,
+        screenIndex: state.screenIndex,
+        isAbscure: state.isAbscure,
+        suffixIcon: state.suffixIcon,
+      ));
+    });
+
+
+    on<LoadContact>((event, emit) async{
+
+      String deliveryDate1=DateTime.now().add(Duration(days: state.delivery_methods[state.selectedDeliveryIndex]["max_days"])).toString().substring(0,10);
+
+      String contact1=await getFoodsObject.fetchContact();
+
+      emit(AppState(
+        flashSale: state.flashSale,
+        subCategories: state.subCategories,
+        filters: state.filters,
+        filteredProducts: state.filteredProducts,
+        deliveryDate: deliveryDate1,
+        ordersPlaced: state.ordersPlaced,
+        profileImage: state.profileImage,
+        voucherUsedIndex: state.voucherUsedIndex,
+        selectedDeliveryIndex: state.selectedDeliveryIndex,
+        orderRaiting: state.orderRaiting,
+        delivery_methods: state.delivery_methods,
+        voucher: state.voucher,
+        contact:contact1,
+        address: state.address,
+        favoriteProductsIds: state.favoriteProductsIds,
+        cart: state.cart,
+        lastSearch: state.lastSearch,
+        searchHistory: state.searchHistory,
+        searchedProducts: state.searchedProducts,
+        fleshSalesProducts: state.fleshSalesProducts,
+        cartProgress:state.cartProgress,
+        categories: state.categories,
+        topSoldProducts: state.topSoldProducts,
+        newArrivalProducts: state.newArrivalProducts,
+        products: state.products,
+        screenIndex: state.screenIndex,
+        isAbscure: state.isAbscure,
+        suffixIcon: state.suffixIcon,
+      ));
+    });
+
+    on<EditAddress>((event, emit) async {
+      await getFoodsObject.editAddressContact(event.value, event.purpose);
+
+      if (event.purpose == "contact"){
+        String contact1 = await getFoodsObject.fetchContact();
+
+        emit(AppState(
+          flashSale: state.flashSale,
+          cartProgress:state.cartProgress,
+          subCategories: state.subCategories,
+          filters: state.filters,
+          filteredProducts: state.filteredProducts,
+          ordersPlaced: state.ordersPlaced,
+          profileImage: state.profileImage,
+          selectedDeliveryIndex: state.selectedDeliveryIndex,
+          voucherUsedIndex: state.voucherUsedIndex,
+          contact: contact1,
+          delivery_methods: state.delivery_methods,
+          voucher: state.voucher,
+          address: state.address,
+          orderRaiting: state.orderRaiting,
+          favoriteProductsIds: state.favoriteProductsIds,
+          cart: state.cart,
+          lastSearch: state.lastSearch,
+          searchHistory: state.searchHistory,
+          searchedProducts: state.searchedProducts,
+          fleshSalesProducts: state.fleshSalesProducts,
+          categories: state.categories,
+          topSoldProducts: state.topSoldProducts,
+          newArrivalProducts: state.newArrivalProducts,
+          products: state.products,
+          screenIndex: state.screenIndex,
+          isAbscure: state.isAbscure,
+          suffixIcon: state.suffixIcon,
+        ));
+      }else{
+        String address1 = await getFoodsObject.fetchAddress();
+
+        emit(AppState(
+          flashSale: state.flashSale,
+          subCategories: state.subCategories,
+          filters: state.filters,
+          filteredProducts: state.filteredProducts,
+          ordersPlaced: state.ordersPlaced,
+          profileImage: state.profileImage,
+          selectedDeliveryIndex: state.selectedDeliveryIndex,
+          voucherUsedIndex: state.voucherUsedIndex,
+          contact: state.contact,
+          delivery_methods: state.delivery_methods,
+          voucher: state.voucher,
+          address: address1,
+          orderRaiting: state.orderRaiting,
+          favoriteProductsIds: state.favoriteProductsIds,
+          cart: state.cart,
+          lastSearch: state.lastSearch,
+          searchHistory: state.searchHistory,
+          searchedProducts: state.searchedProducts,
+          fleshSalesProducts: state.fleshSalesProducts,
+          categories: state.categories,
+          topSoldProducts: state.topSoldProducts,
+          newArrivalProducts: state.newArrivalProducts,
+          products: state.products,
+          cartProgress:state.cartProgress,
+          screenIndex: state.screenIndex,
+          isAbscure: state.isAbscure,
+          suffixIcon: state.suffixIcon,
+        ));
+      }
+
     });
 
 
@@ -1411,17 +1368,12 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon:state.suffixIcon,
       ));
     });
@@ -1437,7 +1389,33 @@ print("${event.quantity}");
 
       List<Food> searchedProducts1=[];
       for(int i=0;i<state.products.length;i++){
+
+
+        if(state.products[i].name.trim().toLowerCase()==event.searchText.trim().toLowerCase()){
+          searchedProducts1.add(state.products[i]);
+        }
+
         if(state.products[i].categoryName.trim().toLowerCase()==event.searchText.trim().toLowerCase()){
+          searchedProducts1.add(state.products[i]);
+        }
+
+        if(state.products[i].discountPercentage.toString()==event.searchText){
+          searchedProducts1.add(state.products[i]);
+        }
+
+        if(state.products[i].price.toString()==event.searchText){
+          searchedProducts1.add(state.products[i]);
+        }
+
+        if(state.products[i].subCategory.trim().toLowerCase()==event.searchText.trim().toLowerCase()){
+          searchedProducts1.add(state.products[i]);
+        }
+
+        if(state.products[i].colors.contains(event.searchText)){
+          searchedProducts1.add(state.products[i]);
+        }
+
+        if(state.products[i].sizes.contains(event.searchText)){
           searchedProducts1.add(state.products[i]);
         }
       }
@@ -1461,17 +1439,12 @@ print("${event.quantity}");
           searchHistory: state.searchHistory,
           searchedProducts: searchedProducts1,
           fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
           newArrivalProducts: state.newArrivalProducts,
           products: state.products,
           screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,suffixIcon: state.suffixIcon));
+          isAbscure: state.isAbscure,suffixIcon: state.suffixIcon));
 
 
       final searchHistory1 = List<String>.from(
@@ -1498,17 +1471,12 @@ print("${event.quantity}");
           searchHistory: searchHistory1,
           searchedProducts: searchedProducts1,
           fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
           newArrivalProducts: state.newArrivalProducts,
           products: state.products,
           screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,suffixIcon: state.suffixIcon));
+          isAbscure: state.isAbscure,suffixIcon: state.suffixIcon));
 
 
 
@@ -1542,17 +1510,12 @@ print("${event.quantity}");
         searchHistory: searchHistory1,
           searchedProducts: state.searchedProducts,
           fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
           newArrivalProducts: state.newArrivalProducts,
           products: state.products,
           screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,suffixIcon: state.suffixIcon));
+          isAbscure: state.isAbscure,suffixIcon: state.suffixIcon));
 
 
     });
@@ -1582,17 +1545,12 @@ print("${event.quantity}");
           searchHistory: state.searchHistory,
           searchedProducts:[],
           fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
           categories: state.categories,
           topSoldProducts: state.topSoldProducts,
           newArrivalProducts: state.newArrivalProducts,
           products: state.products,
           screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,suffixIcon: state.suffixIcon));
+          isAbscure: state.isAbscure,suffixIcon: state.suffixIcon));
 
     });
 
@@ -1600,645 +1558,6 @@ print("${event.quantity}");
 
 
 
-
-    on<SetEmail>((event, emit) {
-      emit(AppState(flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        cartProgress:state.cartProgress,
-        filteredProducts: state.filteredProducts,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        orderRaiting: state.orderRaiting,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,
-        lPassword: state.lPassword,lEmail: event.email,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-    on<SetPassword>((event, emit) {
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        cartProgress:state.cartProgress,
-        orderRaiting: state.orderRaiting,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,
-        lPassword: event.password,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-
-    on<DeleteAccount>((event, emit) async{
-      bool isNeedToLogin1=await getFoodsObject.deleteUser();
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        isNeedToLogin:isNeedToLogin1,
-        isAccountDeleted:true,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        cartProgress:state.cartProgress,
-        orderRaiting: state.orderRaiting,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-    on<SetSignup>((event, emit) async{
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        cartProgress:state.cartProgress,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        orderRaiting: state.orderRaiting,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        picker: state.picker,
-        sGender: event.sGender,
-        sImagePicker: event.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: "waiting",
-        sPhone: event.sPhone,
-        sPassword: event.sPassword,sEmail: event.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-
-
-      String status = "";
-
-      try {
-
-        var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-            'https://api.cloudinary.com/v1_1/djoek38oa/image/upload',
-          ),
-        );
-
-        request.fields['upload_preset'] = 'shoppe_profile_pictures';
-        request.files.add(
-          await http.MultipartFile.fromPath('file', state.picker!.path),
-        );
-
-        var response = await request.send();
-        var result = jsonDecode(await response.stream.bytesToString());
-
-
-        emit(AppState(
-          flashSale: state.flashSale,
-          subCategories: state.subCategories,
-          filters: state.filters,
-          filteredProducts: state.filteredProducts,
-          ordersPlaced: state.ordersPlaced,
-          profileImage: state.profileImage,
-          contact: state.contact,
-          delivery_methods: state.delivery_methods,
-          voucher: state.voucher,
-          orderRaiting: state.orderRaiting,
-          address: state.address,
-          favoriteProductsIds: state.favoriteProductsIds,
-          cart: state.cart,
-          lastSearch: state.lastSearch,
-          searchHistory: state.searchHistory,
-          searchedProducts: state.searchedProducts,
-          fleshSalesProducts: state.fleshSalesProducts,
-          picker: state.picker,
-          sGender: event.sGender,
-          cartProgress:state.cartProgress,
-          sImagePicker: result["secure_url"],
-          categories: state.categories,
-          topSoldProducts: state.topSoldProducts,
-          newArrivalProducts: state.newArrivalProducts,
-          products: state.products,
-          screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: "waiting",
-          sPhone: event.sPhone,
-          sPassword: event.sPassword,sEmail: event.sEmail,
-          lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-          suffixIcon: state.suffixIcon,
-        ));
-
-
-
-        try {
-
-          if(event.sGender!="") {
-            final user = await FirebaseAuth.instance
-                .createUserWithEmailAndPassword(
-                email: event.sEmail, password: event.sPassword);
-
-            await FirebaseFirestore.instance.collection("users_data").doc(
-                user.user?.uid).set({
-              "phone": event.sPhone,
-              "profileImageUrl": state.sImagePicker,
-              "gender": event.sGender
-            });
-          }
-          else{
-
-
-
-            final user = FirebaseAuth.instance.currentUser;
-
-            if (user == null) return;
-
-              await user.verifyBeforeUpdateEmail(event.sEmail.trim());
-
-              await user.updatePassword(event.sPassword.trim());
-
-              await FirebaseFirestore.instance
-                  .collection('users_data')
-                  .doc(user.uid)
-                  .update({
-                'user_name': event.name.trim(),
-              });
-
-
-
-
-          }
-
-          status = "successful";
-        }
-        on FirebaseAuthException catch (e) {
-          print("Signup error: ${e.message}");
-          status = "exception";
-        }
-
-
-      }catch(e){
-        print("Signup error: ${e}");
-        status = "exception";
-      }
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        cartProgress:state.cartProgress,
-        status: status,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        orderRaiting: state.orderRaiting,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        picker: state.picker,
-        sGender: event.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: status,
-        sPhone: event.sPhone,
-        sPassword: event.sPassword,sEmail: event.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-    on<LoadAddress>((event, emit) async{
-
-      String deliveryDate1=DateTime.now().add(Duration(days: state.delivery_methods[state.selectedDeliveryIndex]["max_days"])).toString().substring(0,10);
-
-
-      String address1=await getFoodsObject.fetchAddress();
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        deliveryDate: deliveryDate1,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        voucherUsedIndex: state.voucherUsedIndex,
-        selectedDeliveryIndex: state.selectedDeliveryIndex,
-        contact: state.contact,
-        cartProgress:state.cartProgress,
-        orderRaiting: state.orderRaiting,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: address1,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: "",
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-
-    on<LoadContact>((event, emit) async{
-
-      String deliveryDate1=DateTime.now().add(Duration(days: state.delivery_methods[state.selectedDeliveryIndex]["max_days"])).toString().substring(0,10);
-
-      String contact1=await getFoodsObject.fetchContact();
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        deliveryDate: deliveryDate1,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        voucherUsedIndex: state.voucherUsedIndex,
-        selectedDeliveryIndex: state.selectedDeliveryIndex,
-        orderRaiting: state.orderRaiting,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        contact:contact1,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        cartProgress:state.cartProgress,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: "",
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-
-
-    on<EditAddress>((event, emit) async {
-      await getFoodsObject.editAddressContact(event.value, event.purpose);
-
-      if (event.purpose == "contact"){
-        String contact1 = await getFoodsObject.fetchContact();
-
-        emit(AppState(
-          flashSale: state.flashSale,
-          cartProgress:state.cartProgress,
-          subCategories: state.subCategories,
-          filters: state.filters,
-          filteredProducts: state.filteredProducts,
-          ordersPlaced: state.ordersPlaced,
-          profileImage: state.profileImage,
-          selectedDeliveryIndex: state.selectedDeliveryIndex,
-          voucherUsedIndex: state.voucherUsedIndex,
-          contact: contact1,
-          delivery_methods: state.delivery_methods,
-          voucher: state.voucher,
-          address: state.address,
-          orderRaiting: state.orderRaiting,
-          favoriteProductsIds: state.favoriteProductsIds,
-          cart: state.cart,
-          lastSearch: state.lastSearch,
-          searchHistory: state.searchHistory,
-          searchedProducts: state.searchedProducts,
-          fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
-          categories: state.categories,
-          topSoldProducts: state.topSoldProducts,
-          newArrivalProducts: state.newArrivalProducts,
-          products: state.products,
-          screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: "",
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,
-          lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-          suffixIcon: state.suffixIcon,
-        ));
-      }else{
-        String address1 = await getFoodsObject.fetchAddress();
-
-        emit(AppState(
-          flashSale: state.flashSale,
-          subCategories: state.subCategories,
-          filters: state.filters,
-          filteredProducts: state.filteredProducts,
-          ordersPlaced: state.ordersPlaced,
-          profileImage: state.profileImage,
-          selectedDeliveryIndex: state.selectedDeliveryIndex,
-          voucherUsedIndex: state.voucherUsedIndex,
-          contact: state.contact,
-          delivery_methods: state.delivery_methods,
-          voucher: state.voucher,
-          address: address1,
-          orderRaiting: state.orderRaiting,
-          favoriteProductsIds: state.favoriteProductsIds,
-          cart: state.cart,
-          lastSearch: state.lastSearch,
-          searchHistory: state.searchHistory,
-          searchedProducts: state.searchedProducts,
-          fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          sImagePicker: state.sImagePicker,
-          categories: state.categories,
-          topSoldProducts: state.topSoldProducts,
-          newArrivalProducts: state.newArrivalProducts,
-          products: state.products,
-          cartProgress:state.cartProgress,
-          screenIndex: state.screenIndex,
-          loginStatus: state.loginStatus,
-          signupStatus: "",
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail: state.sEmail,
-          lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-          suffixIcon: state.suffixIcon,
-        ));
-      }
-
-    });
-
-
-    on<CleanSignupStatus>((event, emit) async{
-
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        orderRaiting: state.orderRaiting,
-        address: state.address,
-        cartProgress:state.cartProgress,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus: state.loginStatus,
-        signupStatus: "",
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail: state.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
-
-
-    on<Login>((event, emit) async{
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        cartProgress:state.cartProgress,
-        orderRaiting: state.orderRaiting,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus:"waiting",
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail:state.sEmail,
-        lPassword: state.lPassword,lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-
-      String status="";
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: state.lEmail,
-            password: state.lPassword
-        );
-        status="successful";
-      }
-      on FirebaseAuthException catch(e) {
-        print("Login code: ${e.code}");
-        status="exception";
-      }
-
-        emit(AppState(
-          flashSale: state.flashSale,
-          subCategories: state.subCategories,
-          filters: state.filters,
-          filteredProducts: state.filteredProducts,
-          ordersPlaced: state.ordersPlaced,
-          profileImage: state.profileImage,
-          contact: state.contact,
-          orderRaiting: state.orderRaiting,
-          delivery_methods: state.delivery_methods,
-          voucher: state.voucher,
-          address: state.address,
-          favoriteProductsIds: state.favoriteProductsIds,
-          cart: state.cart,
-          lastSearch: state.lastSearch,
-          searchHistory: state.searchHistory,
-          searchedProducts: state.searchedProducts,
-          fleshSalesProducts: state.fleshSalesProducts,
-          sGender: state.sGender,
-          cartProgress:state.cartProgress,
-          sImagePicker: state.sImagePicker,
-          categories: state.categories,
-          topSoldProducts: state.topSoldProducts,
-          newArrivalProducts: state.newArrivalProducts,
-          products: state.products,
-          screenIndex: state.screenIndex,
-          loginStatus:status,
-          signupStatus: state.signupStatus,
-          sPhone: state.sPhone,
-          sPassword: state.sPassword,sEmail:state.sEmail,
-          lPassword: "",lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-          suffixIcon: state.suffixIcon,
-        ));
-    });
-
-
-
-    on<CleanLoginStatus>((event, emit) async{
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        orderRaiting: state.orderRaiting,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        cartProgress:state.cartProgress,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus:"",
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail:state.sEmail,
-        lPassword: "",lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
 
 
     on<ScreensNavigation>((event, emit) async{
@@ -2262,106 +1581,21 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: event.index,
-        loginStatus:"",
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail:state.sEmail,
-        lPassword: "",lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
 
 
-    on<PasswordRecovery>((event, emit) async{
-
-      try {
-        await FirebaseAuth.instance.sendPasswordResetEmail(email:state.lEmail);
-
-      }
-      on FirebaseAuthException catch(e) {
-        print("Reset Email message: ${e.message}");
-      }
-
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        orderRaiting: state.orderRaiting,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        cartProgress:state.cartProgress,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus:state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail:state.sEmail,
-        lPassword: "",lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
 
 
-    on<Picker>((event, emit) async{
 
-      emit(AppState(
-        flashSale: state.flashSale,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        orderRaiting: state.orderRaiting,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        contact: state.contact,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
-        picker: event.picker,
-        cartProgress:state.cartProgress,
-        sImagePicker: state.sImagePicker,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-        loginStatus:state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail:state.sEmail,
-        lPassword: "",lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
-        suffixIcon: state.suffixIcon,
-      ));
-    });
+
 
 
 
@@ -2390,21 +1624,13 @@ print("${event.quantity}");
         searchHistory: state.searchHistory,
         searchedProducts: state.searchedProducts,
         fleshSalesProducts: state.fleshSalesProducts,
-        sGender: state.sGender,
         cartProgress:state.cartProgress,
-        picker: state.picker,
-
-        sImagePicker: state.sImagePicker,
         categories: state.categories,
         topSoldProducts: state.topSoldProducts,
         newArrivalProducts: state.newArrivalProducts,
         products: state.products,
         screenIndex: state.screenIndex,
-        loginStatus:state.loginStatus,
-        signupStatus: state.signupStatus,
-        sPhone: state.sPhone,
-        sPassword: state.sPassword,sEmail:state.sEmail,
-        lPassword: "",lEmail: state.lEmail,isAbscure: state.isAbscure,selectedLink: state.selectedLink,
+        isAbscure: state.isAbscure,
         suffixIcon: state.suffixIcon,
       ));
     });
