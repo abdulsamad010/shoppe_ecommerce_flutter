@@ -6,11 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/text_styles/app_text_styles.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/features/profile/bloc/profile_bloc.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/settings/settings_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/to_receive/to_receive_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/voucher/voucher_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/voucher_payment/voucher_payment_screen.dart';
 
+import '../../../data/repositories/food_repository_impl.dart';
+import '../../../domain/usecases/get_foods.dart';
 import '../../core/bloc/app_bloc/app_bloc.dart';
 import '../../core/bloc/app_bloc/app_event.dart';
 import '../../core/bloc/app_bloc/app_state.dart';
@@ -35,6 +38,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
+  final getFoodsObject=GetFoods(repository: FoodRepositoryImpl());
   int indexOfEmail=-1;
   final List<String> buttonsNames=[
     "To Pay",
@@ -149,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
 
           ),
-          
+
           backgroundColor: white,
             body: Padding(padding: EdgeInsets.only(left:16.w,right: 16.w,top: 8.w,bottom: 8.w),
             child: SingleChildScrollView(
@@ -383,7 +387,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 432.w,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.categories.length>3 ? 3 : state.categories.length,
+                        itemCount: state.newArrivalProducts.length>3 ? 3 : state.categories.length,
                         itemBuilder: (context,index){
                           return GestureDetector(
                             onTap: (){
@@ -469,6 +473,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onTap: (){
                               context.read<AppBloc>().add(
                                   SearchProducts(searchText: state.categories[index]["name"]));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()));
+                              context.read<AppBloc>().add(ScreensNavigation(index: 0));
                             },
                             child: CategoryCard(categories: state.categories,index:index));
 
@@ -527,7 +533,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               childAspectRatio: 1,
                               mainAxisSpacing: 0,
                               crossAxisCount: 4),
-                          itemCount: state.categories.length>4 ? 4 : state.categories.length,
+                          itemCount: state.fleshSalesProducts.length>4 ? 4 : state.categories.length,
                           itemBuilder: (context,index){
                             return Padding(
                                 padding: EdgeInsets.only(left: 3,right:3.w,),
