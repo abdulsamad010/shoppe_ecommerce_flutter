@@ -18,15 +18,33 @@ import '../../core/colors/app_colors.dart';
 import '../../core/text_styles/app_text_styles.dart';
 import '../../core/widgets/settings_card.dart';
 import '../login_email/login_email_screen.dart';
+import '../profile/bloc/profile_bloc.dart';
+import '../profile/bloc/profile_event.dart';
+import '../profile/bloc/profile_state.dart';
 
 class SettingsScreen extends StatelessWidget {
 const SettingsScreen({super.key});
 
 @override
 Widget build(BuildContext context) {
-return BlocConsumer<AppBloc,AppState>(
+return BlocConsumer<ProfileBloc,ProfileState>(
 
   listener: (context,state){
+
+    if(state.isPressed==true){
+        showDialog(context: context, barrierDismissible: false,
+            builder: (context) {
+          return AlertDialog(
+            backgroundColor: white,
+            content: Container(
+                height: 50.h,
+                width: 50.w,
+                child: Center(
+                    child: CircularProgressIndicator(color: blue,))),
+          );
+        });
+      }
+
     if(state.isAccountDeleted==true && state.isNeedToLogin==false){
       Navigator.pushAndRemoveUntil(
         context,
@@ -248,7 +266,7 @@ return BlocConsumer<AppBloc,AppState>(
                                       height: 38.h,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          context.read<AppBloc>().add(Logout());
+                                          context.read<ProfileBloc>().add(Logout());
                                           Navigator.pop(context);
                                         },
                                         style: ElevatedButton.styleFrom(
@@ -399,7 +417,7 @@ return BlocConsumer<AppBloc,AppState>(
                                   height: 38.h,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      context.read<AppBloc>().add(DeleteAccount());
+                                      context.read<ProfileBloc>().add(DeleteAccount());
                                       Navigator.pop(context);
                                     },
                                     style: ElevatedButton.styleFrom(
