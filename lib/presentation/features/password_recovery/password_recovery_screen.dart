@@ -9,6 +9,8 @@ import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_sta
 import 'package:shoppe_ecommerce_flutter/presentation/core/text_styles/app_text_styles.dart';
 
 import '../../core/colors/app_colors.dart';
+import '../login_email/bloc/auth_bloc.dart';
+import '../login_email/bloc/auth_event.dart';
 import '../login_email/login_email_screen.dart';
 
 class PasswordRecoveryScreen extends StatefulWidget {
@@ -134,7 +136,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                     height: 61.h,
                     child: ElevatedButton(onPressed: () {
 
-                      context.read<AppBloc>().add(PasswordRecovery());
+                      context.read<AuthBloc>().add(PasswordRecovery());
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("If your email is registered you will get a password reset link",style: AppTextStyles.b1),backgroundColor: Colors.white,));
 
