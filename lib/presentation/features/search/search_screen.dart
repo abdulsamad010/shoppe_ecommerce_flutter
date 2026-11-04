@@ -10,6 +10,7 @@ import '../../core/bloc/app_bloc/app_event.dart';
 import '../../core/bloc/app_bloc/app_state.dart';
 import '../../core/colors/app_colors.dart';
 import '../../core/text_styles/app_text_styles.dart';
+import '../product_details/product_details_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -113,19 +114,28 @@ class _SearchScreenState extends State<SearchScreen> {
                     spacing: 10.w,
                     runSpacing: 10.w,
                     children: List.generate(state.searchHistory.length,
-                    (index) => Container(
-                      height: 36.h,
-                      width: 62.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.r),
-                        color: Color(0xFFF4F4F4)
-                      ),
-                      child:Center(
-                        child: Text("${state.searchHistory[index]}",style: GoogleFonts.raleway(
-                          fontWeight: FontWeight(500),
-                          fontSize: 17,
-                          letterSpacing: -0.17
-                        ),),
+                    (index) => GestureDetector(
+                      onTap:(){
+                        sC.text=state.searchHistory[index];
+                        context.read<AppBloc>().add(
+                            SearchProducts(searchText: sC.text));
+
+                        isSubmit=true;
+                      },
+                      child: Container(
+                        height: 36.h,
+                        width: 62.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9.r),
+                          color: Color(0xFFF4F4F4)
+                        ),
+                        child:Center(
+                          child: Text("${state.searchHistory[index]}",style: GoogleFonts.raleway(
+                            fontWeight: FontWeight(500),
+                            fontSize: 17,
+                            letterSpacing: -0.17
+                          ),),
+                        ),
                       ),
                     ),
                     ),
@@ -168,17 +178,41 @@ class _SearchScreenState extends State<SearchScreen> {
 
                   Text("Discover",style: AppTextStyles.h2,),
                   SizedBox(
-                    height: 220.h,
+                    height: 245.h,
+                    width: 432.w,
                     child: ListView.builder(
-
-                        itemCount: 5,
                         scrollDirection: Axis.horizontal,
+                        itemCount: state.newArrivalProducts.length,
                         itemBuilder: (context,index){
-                    
-                        return NewItemsCard(image: state.products[index].imageUrl, text: state.products[index].name, price: state.products[index].price);
-                    
-                    }),
-                  )
+                          return GestureDetector(
+                            onTap: (){
+
+
+                              int arrivalIndex=state.products.indexWhere((item) {
+                                return item.id == state.newArrivalProducts[index].id;
+                              });
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailsScreen(
+                                      productId: state.products[arrivalIndex].id
+                                  ),
+                                ),
+                              );
+
+
+                            },
+                            child: AspectRatio(
+                              aspectRatio: 0.6,
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 3,right:3.w),
+                                  child: NewItemsCard(image: "${state.newArrivalProducts[index].imageUrl}", text: "${state.newArrivalProducts[index].name}", price: state.newArrivalProducts[index].price)
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
 
                 ],
               ),
