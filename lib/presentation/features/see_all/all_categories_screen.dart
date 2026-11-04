@@ -10,6 +10,7 @@ import '../../core/bloc/app_bloc/app_event.dart';
 import '../../core/colors/app_colors.dart';
 import '../../core/text_styles/app_text_styles.dart';
 import '../../core/widgets/category_card.dart';
+import '../bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 
 class AllCategoriesScreen extends StatelessWidget {
   const AllCategoriesScreen({super.key});
@@ -39,6 +40,10 @@ class AllCategoriesScreen extends StatelessWidget {
                     onTap: (){
                     context.read<AppBloc>().add(
                     SearchProducts(searchText: state.categories[index]["name"]));
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()));
+                    context.read<AppBloc>().add(ScreensNavigation(index: 0));
+
                     },
                     child: CategoryCard(categories: state.categories,index:index));
 
