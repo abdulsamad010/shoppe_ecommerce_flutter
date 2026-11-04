@@ -33,7 +33,9 @@ class TopProductsCard extends StatelessWidget {
             ),
             child: Image.network("$image",
               height: 63.h,width: 54.w,
-              fit: BoxFit.cover,)),
+              fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => SizedBox(),
+            )),
       )
     );
   }
