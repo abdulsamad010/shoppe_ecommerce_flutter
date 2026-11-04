@@ -9,7 +9,12 @@ import 'package:shoppe_ecommerce_flutter/presentation/core/text_styles/app_text_
 import 'package:shoppe_ecommerce_flutter/presentation/features/hello_card/hello_card_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/password_recovery/password_recovery_screen.dart';
 
+import '../../../data/repositories/food_repository_impl.dart';
+import '../../../domain/usecases/get_foods.dart';
 import '../../core/colors/app_colors.dart';
+import '../login_email/bloc/auth_bloc.dart';
+import '../login_email/bloc/auth_event.dart';
+import '../login_email/bloc/auth_state.dart';
 
 class LoginPasswordScreen extends StatefulWidget {
   const LoginPasswordScreen({super.key});
@@ -19,6 +24,8 @@ class LoginPasswordScreen extends StatefulWidget {
 }
 
 class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
+
+  final getFoodsObject=GetFoods(repository: FoodRepositoryImpl());
 
   final pCon=TextEditingController();
 
@@ -33,7 +40,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
     super.initState();
 
     emailDisplayName = context
-        .read<AppBloc>()
+        .read<AuthBloc>()
         .state
         .lEmail;
     int index = emailDisplayName.indexOf("@");
@@ -45,7 +52,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final myFocusNode=FocusNode();
-    return BlocListener<AppBloc,AppState>(
+    return BlocConsumer<AuthBloc,AuthState>(
 
       listener: (context,state){
 
@@ -74,7 +81,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
             isDialogOpen = false;
           }
 
-          context.read<AppBloc>().add(CleanLoginStatus());
+          context.read<AuthBloc>().add(CleanLoginStatus());
 
 
           Navigator.pushReplacement(context,
@@ -92,13 +99,13 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Failed, Try Forget Password",style: AppTextStyles.b1),backgroundColor: Colors.transparent,));
 
-          context.read<AppBloc>().add(CleanLoginStatus());
+          context.read<AuthBloc>().add(CleanLoginStatus());
         }
 
 
       },
 
-      child: Scaffold(
+      builder: (context,state)=>Scaffold(
         backgroundColor: white,
           body: Stack(
             children: [
@@ -144,10 +151,10 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
                           if(pCon.text.length==8){
                             print("password: ${pCon.text}");
 
-                            context.read<AppBloc>().add(
+                            context.read<AuthBloc>().add(
                                 SetPassword(password: pCon.text));
 
-                            context.read<AppBloc>().add(Login());
+                            context.read<AuthBloc>().add(Login());
                             pCon.text="";
 
 
@@ -156,7 +163,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
 
 
                           if(pCon.text.length<=8) {
-                            context.read<AppBloc>().add(
+                            context.read<AuthBloc>().add(
                                 SetPassword(password: pCon.text));
 
 
@@ -179,7 +186,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
 
                       Transform.translate(
                         offset: Offset(0, -40.h),
-                        child: BlocBuilder<AppBloc,AppState>(
+                        child: BlocBuilder<AuthBloc,AuthState>(
                           builder:(context,state)=> GestureDetector(
                             onTap: (){
                               myFocusNode.requestFocus();
@@ -206,14 +213,18 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
 
 
                       Center(
-                        child: BlocBuilder<AppBloc,AppState>(
+                        child: BlocBuilder<AuthBloc,AuthState>(
                           builder:(context,state)=>
                               state.lPassword.length==0 ?
                               TextButton(onPressed: (){
 
+
+                                final authBloc = context.read<AuthBloc>();
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) =>
-                                    PasswordRecoveryScreen()));
+                                    BlocProvider.value(
+                                      value: authBloc,
+                                      child: PasswordRecoveryScreen(),)));
 
 
                           }, child: Text(
