@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoppe_ecommerce_flutter/data/repositories/food_repository_impl.dart';
 import 'package:shoppe_ecommerce_flutter/domain/usecases/get_foods.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/core/bloc/app_bloc/app_bloc.dart';
+import 'package:shoppe_ecommerce_flutter/presentation/core/notification_service/notification_service.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/profile/bloc/profile_bloc.dart';
 import 'package:shoppe_ecommerce_flutter/presentation/features/shop/shop_screen.dart';
@@ -23,6 +25,22 @@ void main() async {
   );
 
   user=await FirebaseAuth.instance.currentUser;
+
+
+
+
+  final GlobalKey<ScaffoldMessengerState> messengerKey =
+  GlobalKey<ScaffoldMessengerState>();
+
+
+    FirebaseMessaging.onBackgroundMessage(
+      firebaseBackgroundHandler,
+    );
+
+    await NotificationService.initialize(messengerKey);
+
+
+
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
