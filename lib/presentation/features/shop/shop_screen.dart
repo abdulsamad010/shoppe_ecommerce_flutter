@@ -49,7 +49,9 @@ class _ShopScreenState extends State<ShopScreen> {
             backgroundColor: white,
             title: Padding(
               padding: EdgeInsets.only(left:6.w),
-              child: Text("Shop",style: AppTextStyles.h2,),
+              child: Text("Shop",style: AppTextStyles.h2.copyWith(
+                fontSize: 22.sp
+              ),),
             ),
             actionsPadding: EdgeInsets.only(right: 16.w),
             actions: [

@@ -80,7 +80,7 @@ class _HelloCardScreen2State extends State<HelloCardScreen2> {
                               width: 201.w,
                               height: 50.h,
                               child: ElevatedButton(onPressed: (){
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()));
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()),(route) => false,);
                                 context.read<AppBloc>().add(ScreensNavigation(index: 0));
                               },
                                   style: ElevatedButton.styleFrom(
