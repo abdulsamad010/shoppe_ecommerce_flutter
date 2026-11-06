@@ -11,6 +11,7 @@ import 'package:shoppe_ecommerce_flutter/presentation/features/settings/settings
 import '../../core/bloc/app_bloc/app_bloc.dart';
 import '../../core/bloc/app_bloc/app_event.dart';
 import '../../core/colors/app_colors.dart';
+import '../bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import '../voucher/voucher_screen.dart';
 
 class ToReceiveScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ToReceiveScreenState extends State<ToReceiveScreen> {
   void initState() {
     super.initState();
     context.read<AppBloc>().add(LoadOrdersAndProfileImage());
-
+    context.read<AppBloc>().add(GetProducts());
     if(widget.toRecieveOnly==true){
       for(int i=0;i<context.read<AppBloc>().state.ordersPlaced.length;i++){
         if(context.read<AppBloc>().state.ordersPlaced[i]["order_status"].last!="Delivered"){
@@ -48,9 +49,119 @@ class _ToReceiveScreenState extends State<ToReceiveScreen> {
     }
   }
 
+
+  bool isProgressShown=false;
+  bool isProgressShown1=false;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc,AppState>(
+    return BlocConsumer<AppBloc,AppState>(
+      listener: (context, state) {
+
+
+        if(state.isProceed && isProgressShown==false){
+          isProgressShown=true;
+          showDialog(context: context,barrierDismissible: false, builder: (context) {
+            return AlertDialog(
+              backgroundColor: white,
+              content: Container(
+                  height: 50.h,
+                  width: 50.w,
+                  child: Center(
+                      child: CircularProgressIndicator(color: blue,))),
+            );
+          });
+        }
+
+
+        if (state.isSubmitted && isProgressShown){
+          isProgressShown=false;
+          Navigator.of(context, rootNavigator: true).pop();
+          showDialog(barrierDismissible: false,context: context, builder: (context){
+            return PopScope(
+              canPop: false,
+              child: AlertDialog(
+                backgroundColor: white,
+                clipBehavior: Clip.none,
+                title: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          height: 80.w,
+                          width: 80.w,
+                          clipBehavior: Clip.hardEdge,
+                          padding: EdgeInsets.all(8.w),
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.16),
+                                    blurRadius: 8.r
+                                )
+                              ],
+                              shape: BoxShape.circle,
+                              color: white
+                          ),
+                          child: Center(child: SvgPicture.asset("assets/icons/Component 5 – 3 (1).svg",height: 50.w,width: 50.w,))),
+
+
+                      Column(
+                        children: [
+
+                          Text("Done!",style: GoogleFonts.raleway(
+                            fontSize: 19,
+                            fontWeight: FontWeight(700),
+                          ),),
+
+                          SizedBox(height: 8.h,width: 347.w,),
+
+                          Text("Thank you for your review",style: GoogleFonts.nunitoSans(
+                            fontSize: 13,
+                            fontWeight: FontWeight(600),
+                          ),),
+
+
+                          Transform.translate(
+                            offset: Offset(0, 0),
+                            child: SizedBox(
+                              width: 225.w,
+                              height: 34.h,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: blue,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(11.r)
+                                      )
+                                  ),
+
+                                  onPressed: () {
+                                    context.read<AppBloc>().add(ScreensNavigation(index: 0));
+
+                                    Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                        builder: (context) => BottomNavigationBarScreen(),
+                                      ),
+                                          (route) => false,
+                                    );
+                                  }, child: Text("Go to Home",style: AppTextStyles.b2.copyWith(color: white),)),
+                            ),
+                          )
+
+                        ],
+                      )
+
+
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+
+        }
+      },
+
+
       builder:(context,state)=>Scaffold(
         appBar: AppBar(
           backgroundColor: white,

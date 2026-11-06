@@ -35,7 +35,7 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
 
     super.initState();
 
-    context.read<AppBloc>().add(GetProducts());
+
 
     cartProductId=context.read<AppBloc>().state.ordersPlaced[widget.index]["cart_items"][0]["productId"];
     productIndex=context.read<AppBloc>().state.products.indexWhere((item){
@@ -45,113 +45,12 @@ class _ToRecieveCardState extends State<ToRecieveCard> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppBloc,AppState>(
-
-      listener: (context, state) {
+    return BlocBuilder<AppBloc,AppState>(
 
 
-        if(state.isProceed){
-
-          showDialog(context: context,barrierDismissible: false, builder: (context) {
-            return AlertDialog(
-              backgroundColor: white,
-              content: Container(
-                  height: 50.h,
-                  width: 50.w,
-                  child: Center(
-                      child: CircularProgressIndicator(color: blue,))),
-            );
-          });
-        }
-        
-        
-        if(state.isSubmitted==true){
-          Navigator.pop(context);
-          showDialog(barrierDismissible: false,context: context, builder: (context){
-            return AlertDialog(
-              backgroundColor: white,
-              clipBehavior: Clip.none,
-              title: Center(
-                child: Transform.translate(
-                  offset: Offset(0, -60),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                          height: 80.w,
-                          width: 80.w,
-                          clipBehavior: Clip.hardEdge,
-                          padding: EdgeInsets.all(8.w),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.16),
-                                    blurRadius: 8.r
-                                )
-                              ],
-                              shape: BoxShape.circle,
-                              color: white
-                          ),
-                          child: Center(child: SvgPicture.asset("assets/icons/Component 5 – 3 (1).svg",height: 50.w,width: 50.w,))),
-
-                      //SizedBox(height: 8.h),
-
-                      Transform.translate(
-                        offset: Offset(0, 20),
-                        child: Column(
-                          children: [
-
-                            Text("Done!",style: GoogleFonts.raleway(
-                              fontSize: 19,
-                              fontWeight: FontWeight(700),
-                            ),),
-
-                            SizedBox(height: 8.h,width: 347.w,),
-
-                            Text("Thank you for your review",style: GoogleFonts.nunitoSans(
-                              fontSize: 13,
-                              fontWeight: FontWeight(600),
-                            ),),
-
-
-                            Transform.translate(
-                              offset: Offset(0, 18),
-                              child: SizedBox(
-                                width: 225.w,
-                                height: 34.h,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(backgroundColor: blue,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(11.r)
-                                        )
-                                    ),
-
-                                    onPressed: (){
-
-                                      Navigator.pop(context);
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()), (route) => true);
-                                      context.read<AppBloc>().add(ScreensNavigation(index: 0));
-                                    }, child: Text("Go to Home",style: AppTextStyles.b2.copyWith(color: white),)),
-                              ),
-                            )
-
-                          ],
-                        ),
-                      )
-
-
-                    ],
-                  ),
-                ),
-              ),
-            );
-          });
-
-        }
-      },
 
         builder: (context,state) {
           return SizedBox(
