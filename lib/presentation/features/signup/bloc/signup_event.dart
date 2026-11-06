@@ -14,8 +14,8 @@ class CleanSignupStatus extends SignupEvent{
 }
 
 class SetSignup extends SignupEvent{
-  final String name,sEmail,sPassword,sPhone,sImagePicker,sGender;
-  SetSignup({this.name="",required this.sGender,required this.sImagePicker,required this.sPassword,required this.sEmail,required this.sPhone});
+  final String name,sEmail,sPassword,sPhone,sImagePicker,sGender,oSPassword;
+  SetSignup({this.name="",required this.sGender,this.oSPassword="",required this.sImagePicker,required this.sPassword,required this.sEmail,required this.sPhone});
 }
 
 class Picker extends SignupEvent {

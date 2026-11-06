@@ -84,9 +84,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           context.read<AuthBloc>().add(CleanLoginStatus());
 
 
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>
-                  HelloCardScreen()));
+         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HelloCardScreen()), (route) => false,);
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Successful",style: AppTextStyles.b1),backgroundColor: Colors.transparent,));
         }

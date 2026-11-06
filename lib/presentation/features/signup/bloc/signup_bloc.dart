@@ -99,6 +99,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
             if (user == null) return;
 
+            await user!.reauthenticateWithCredential(
+              EmailAuthProvider.credential(
+                email: user.email!,
+                password: event.oSPassword,
+              ),
+            );
+
             await user.verifyBeforeUpdateEmail(event.sEmail.trim());
 
             await user.updatePassword(event.sPassword.trim());
