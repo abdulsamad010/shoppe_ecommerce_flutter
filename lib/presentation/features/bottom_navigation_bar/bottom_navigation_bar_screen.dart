@@ -33,88 +33,98 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc,AppState>(
-      builder: (context,state)=>Scaffold(
+      builder: (context,state)=>PopScope(
+        canPop: state.screenIndex == 0,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && state.screenIndex != 0) {
+            context.read<AppBloc>().add(
+              ScreensNavigation(index: 0),
+            );
+          }
+        },
+        child: Scaffold(
 
-        body: screensList[state.screenIndex],
+          body: screensList[state.screenIndex],
 
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
+          bottomNavigationBar: BottomNavigationBar(
+            showSelectedLabels: false,
+              backgroundColor: white,
+              unselectedItemColor: blue,
+              selectedItemColor: black,
+              onTap: (i){
+                context.read<AppBloc>().add(ScreensNavigation(index:i));
+              },
+              currentIndex: state.screenIndex,
+
+              items: [
+            BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/shop.svg"),
             backgroundColor: white,
-            unselectedItemColor: blue,
-            selectedItemColor: black,
-            onTap: (i){
-              context.read<AppBloc>().add(ScreensNavigation(index:i));
-            },
-            currentIndex: state.screenIndex,
-
-            items: [
-          BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/shop.svg"),
-          backgroundColor: white,
-              label: "",
-            activeIcon: Column(
-              children: [
-                SvgPicture.asset("assets/icons/shop.svg",color: black,),
-                SizedBox(height: 4.h,),
-                SvgPicture.asset("assets/icons/Mark 05.svg"),
-              ],
-            ),
-          ),
-
-              BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/heart.svg"),
-                backgroundColor: white,
                 label: "",
-                activeIcon: Column(
-                  children: [
-                    SvgPicture.asset("assets/icons/heart.svg",color: black,),
-                    SizedBox(height: 4.h,),
-                    SvgPicture.asset("assets/icons/Mark 05.svg"),
-                  ],
-                ),
+              activeIcon: Column(
+                children: [
+                  SvgPicture.asset("assets/icons/shop.svg",color: black,),
+                  SizedBox(height: 4.h,),
+                  SvgPicture.asset("assets/icons/Mark 05.svg"),
+                ],
               ),
+            ),
 
-
-              BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Categories.svg"),
-                backgroundColor: white,
+                BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/heart.svg"),
+                  backgroundColor: white,
                   label: "",
-                activeIcon: Column(
-                  children: [
-                    SvgPicture.asset("assets/icons/Categories.svg",color: black,),
-                    SizedBox(height: 4.h,),
-                    SvgPicture.asset("assets/icons/Mark 05.svg"),
-                  ],
+                  activeIcon: Column(
+                    children: [
+                      SvgPicture.asset("assets/icons/heart.svg",color: black,),
+                      SizedBox(height: 4.h,),
+                      SvgPicture.asset("assets/icons/Mark 05.svg"),
+                    ],
+                  ),
                 ),
-              ),
 
 
-
-              BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Cart (1).svg"),
-                backgroundColor: white,
-                  label: "",
-                activeIcon: Column(
-                  children: [
-                    SvgPicture.asset("assets/icons/Cart (1).svg",color: black,),
-                    SizedBox(height: 4.h,),
-                    SvgPicture.asset("assets/icons/Mark 05.svg"),
-                  ],
+                BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Categories.svg"),
+                  backgroundColor: white,
+                    label: "",
+                  activeIcon: Column(
+                    children: [
+                      SvgPicture.asset("assets/icons/Categories.svg",color: black,),
+                      SizedBox(height: 4.h,),
+                      SvgPicture.asset("assets/icons/Mark 05.svg"),
+                    ],
+                  ),
                 ),
-              ),
 
 
 
-              BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Group 1948.svg"),
-                backgroundColor: white,
-                  label: "",
-                activeIcon: Column(
-                  children: [
-                    SvgPicture.asset("assets/icons/Group 1948.svg",color: black,),
-                    SizedBox(height: 4.h,),
-                    SvgPicture.asset("assets/icons/Mark 05.svg"),
-                  ],
+                BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Cart (1).svg"),
+                  backgroundColor: white,
+                    label: "",
+                  activeIcon: Column(
+                    children: [
+                      SvgPicture.asset("assets/icons/Cart (1).svg",color: black,),
+                      SizedBox(height: 4.h,),
+                      SvgPicture.asset("assets/icons/Mark 05.svg"),
+                    ],
+                  ),
                 ),
-              )
 
-        ]),
 
+
+                BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Group 1948.svg"),
+                  backgroundColor: white,
+                    label: "",
+                  activeIcon: Column(
+                    children: [
+                      SvgPicture.asset("assets/icons/Group 1948.svg",color: black,),
+                      SizedBox(height: 4.h,),
+                      SvgPicture.asset("assets/icons/Mark 05.svg"),
+                    ],
+                  ),
+                )
+
+          ]),
+
+        ),
       ),
     );
   }
