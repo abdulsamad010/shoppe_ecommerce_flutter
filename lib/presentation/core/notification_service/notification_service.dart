@@ -44,6 +44,7 @@ class NotificationService {
 
 
 
+
     final initialMessage = await _messaging.getInitialMessage();
 
     if (initialMessage != null) {

@@ -71,18 +71,28 @@ class FlashSales extends StatelessWidget {
 
 
                                Container(
+
+
                                  padding: const EdgeInsets.all(5),
                                  decoration: BoxDecoration(
                                    color: Colors.grey.shade100,
                                    borderRadius: BorderRadius.circular(8),
                                  ),
+
+
+
                                  child: Text(
                                    state.flashSale['endAt'] == null
                                        ? '00'
+
                                        : ((state.flashSale['endAt'] as Timestamp)
                                        .toDate()
+
                                        .difference(DateTime.now())
                                        .isNegative
+
+
+
                                        ? 0
                                        : (state.flashSale['endAt'] as Timestamp)
                                        .toDate()
@@ -91,7 +101,10 @@ class FlashSales extends StatelessWidget {
                                        30)
                                        .toString()
                                        .padLeft(2, '0'),
-                                   style: AppTextStyles.h3.copyWith(fontSize: 17),
+
+
+                                   style: AppTextStyles.h3.copyWith(
+                                       fontSize: 17),
                                  ),
                                ),
                                const SizedBox(width: 8),
@@ -103,11 +116,17 @@ class FlashSales extends StatelessWidget {
                                  ),
                                  child: Text(
                                    state.flashSale['endAt'] == null
+
+
                                        ? '00'
                                        : ((state.flashSale['endAt'] as Timestamp)
                                        .toDate()
+
                                        .difference(DateTime.now())
                                        .isNegative
+
+
+
                                        ? 0
                                        : (state.flashSale['endAt'] as Timestamp)
                                        .toDate()
@@ -116,6 +135,9 @@ class FlashSales extends StatelessWidget {
                                        30)
                                        .toString()
                                        .padLeft(2, '0'),
+
+
+
                                    style: AppTextStyles.h3.copyWith(fontSize: 17),
                                  ),
                                ),

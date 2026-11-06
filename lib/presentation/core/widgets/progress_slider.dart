@@ -21,15 +21,22 @@ class ProgressSlider extends StatelessWidget {
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
           trackHeight: 8.w,
+
           trackShape: ThreeCircleTrackShape(
             currentStage: stage,
           ),
+
+
           thumbShape: SliderComponentShape.noThumb,
           overlayShape: SliderComponentShape.noOverlay,
           activeTrackColor: blue,
           inactiveTrackColor: const Color(0xFFE5EAFB),
           thumbSize: WidgetStatePropertyAll(Size(30.w, 30.w)),
         ),
+
+
+
+
         child: Slider(
           value: stage.toDouble(),
           min: 1,
@@ -60,12 +67,20 @@ class ThreeCircleTrackShape extends SliderTrackShape {
     final double height = 14.w;
 
     return Rect.fromLTWH(
+
+
+
       offset.dx + horizontalPadding,
+
       offset.dy + (parentBox.size.height - height) / 2,
       parentBox.size.width - horizontalPadding * 2,
+
+
       height,
     );
   }
+
+
 
   @override
   void paint(
@@ -73,9 +88,16 @@ class ThreeCircleTrackShape extends SliderTrackShape {
       Offset offset, {
         required RenderBox parentBox,
         required SliderThemeData sliderTheme,
+
+
+
         required Animation<double> enableAnimation,
         required Offset thumbCenter,
         Offset? secondaryOffset,
+
+
+
+
         bool isEnabled = false,
         bool isDiscrete = false,
         required TextDirection textDirection,
@@ -92,6 +114,8 @@ class ThreeCircleTrackShape extends SliderTrackShape {
 
     final double startX = rect.left;
     final double endX = rect.right;
+
+
     final double centerY = rect.center.dy;
     final double spacing = (endX - startX) / 2;
 
@@ -101,12 +125,21 @@ class ThreeCircleTrackShape extends SliderTrackShape {
     final Color inactiveColor =
         sliderTheme.inactiveTrackColor ?? const Color(0xFFE5EAFB);
 
+
+
+
+
     canvas.drawLine(
+
       Offset(startX, centerY),
+
+
       Offset(endX, centerY),
       Paint()
         ..color = inactiveColor
         ..strokeWidth = 14.w
+
+
         ..strokeCap = StrokeCap.round,
     );
 
@@ -130,6 +163,8 @@ class ThreeCircleTrackShape extends SliderTrackShape {
       Offset(startX, centerY),
       Offset(progressX, centerY),
       Paint()
+
+
         ..color = activeColor
         ..strokeWidth = 8.w
         ..strokeCap = StrokeCap.round,
@@ -150,11 +185,16 @@ class ThreeCircleTrackShape extends SliderTrackShape {
           ..style = PaintingStyle.fill,
       );
 
+
+
+
       isCompleted ? canvas.drawCircle(
         Offset(circleX, centerY),
         circleRadius,
         Paint()
           ..color = white
+
+
           ..style = PaintingStyle.stroke
           ..strokeWidth = 11,
       ) : SizedBox();
@@ -167,6 +207,8 @@ class ThreeCircleTrackShape extends SliderTrackShape {
           ..style = PaintingStyle.stroke
           ..strokeWidth = 5,
       );
+
+
 
       canvas.drawLine(
         Offset(startX, centerY),

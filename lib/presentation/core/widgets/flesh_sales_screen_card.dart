@@ -15,6 +15,7 @@ class FleshSalesScreenCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,6 +34,9 @@ class FleshSalesScreenCard extends StatelessWidget {
           ),
         ],
       ),
+
+
+
       child: Center(
             child: Container(
               clipBehavior: Clip.hardEdge,
@@ -79,6 +83,7 @@ class FleshSalesScreenCard extends StatelessWidget {
                 ]),
             ),
           )),
+
 
           SizedBox(height: 6.h,),
 

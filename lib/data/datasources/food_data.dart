@@ -82,6 +82,8 @@ class FoodData {
 
 
  Future<List<Map<String, dynamic>>> fetchCart() async {
+
+
   final snapshot = await FirebaseFirestore.instance
       .collection("users_data")
       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -103,20 +105,32 @@ class FoodData {
 
   if (operation == "add") {
    cart.add(specificCartMap);
-  } else if (operation == "remove") {
+  }
+
+  else if (operation == "remove") {
+
+
    cart.removeWhere((item) =>
    item["productId"] == specificCartMap["productId"] &&
        item["size"] == specificCartMap["size"] &&
        item["color"] == specificCartMap["color"]);
-  } else if (operation == "increase") {
+  }
+  else if (operation == "increase") {
+
    for (int i = 0; i < cart.length; i++) {
+
+
     if (cart[i]["productId"] == specificCartMap["productId"] &&
         cart[i]["size"] == specificCartMap["size"] &&
         cart[i]["color"] == specificCartMap["color"]) {
      cart[i]["quantity"] = cart[i]["quantity"] + 1;
     }
    }
-  } else if (operation == "decrease") {
+
+
+  }
+
+  else if (operation == "decrease") {
    for (int i = 0; i < cart.length; i++) {
     if (cart[i]["productId"] == specificCartMap["productId"] &&
         cart[i]["size"] == specificCartMap["size"] &&
@@ -141,13 +155,22 @@ class FoodData {
 
 
 
+
+
  Future<String> fetchAddress()async{
+
   final snapshot=await FirebaseFirestore.instance.collection("users_data").doc(FirebaseAuth.instance.currentUser!.uid).get();
   final data=snapshot.data()?["address"] ?? "";
   return data.toString();
+
+
+
  }
 
- Future<String> fetchContact()async{
+ Future<String> fetchContact()    async{
+
+
+
   final snapshot=await FirebaseFirestore.instance.collection("users_data").doc(FirebaseAuth.instance.currentUser!.uid).get();
   final data=snapshot.data()?["phone"] ?? "";
   return data.toString();
@@ -174,6 +197,10 @@ class FoodData {
       .collection("app_events")
       .doc("flash_sale")
       .get();
+
+
+
+
 
   final data = snapshot.data();
 
@@ -222,6 +249,9 @@ class FoodData {
   for (int i = 0; i < orderDetails["cart_items"].length; i++) {
    final snapshot = await FirebaseFirestore.instance
        .collection("products")
+
+
+
        .where(
     "id",
     isEqualTo: orderDetails["cart_items"][i]["productId"],
@@ -231,6 +261,9 @@ class FoodData {
    if (snapshot.docs.isNotEmpty) {
     await snapshot.docs.first.reference.update({
      "quantity": FieldValue.increment(
+
+
+
       -orderDetails["cart_items"][i]["quantity"],
      ),
     });
@@ -241,9 +274,18 @@ class FoodData {
 
 
  Future<List<Map<String, dynamic>>> fetchDelivery() async {
+
+
+
+
+
   final snapshot = await FirebaseFirestore.instance
       .collection("delivery_methods")
       .get();
+
+
+
+
 
   List<Map<String, dynamic>> delivery = [];
 
@@ -270,6 +312,9 @@ class FoodData {
 
  Future<Map<String, dynamic>> fetchOrdersAndImage() async {
   try {
+
+
+
    final String uid = FirebaseAuth.instance.currentUser!.uid;
 
    DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -279,8 +324,13 @@ class FoodData {
 
    String profileImage = "";
    if (userDoc.exists && userDoc.data() != null) {
+
+
     Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
     profileImage = userData["profileImageUrl"] ?? "";
+
+
+
    }
 
    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -321,11 +371,19 @@ class FoodData {
   for (var product in products.docs) {
    await product.reference.update({
     "ratings": FieldValue.arrayUnion([details["rating"]]),
+
     "reviews": FieldValue.arrayUnion([details["review"]]),
+
+
     "reviewersImage": FieldValue.arrayUnion([details["reviewerImage"]]),
     "reviewersNames": FieldValue.arrayUnion([email]),
     "reviewersUid": FieldValue.arrayUnion([
      FirebaseAuth.instance.currentUser!.uid
+
+
+
+
+
     ]),
    });
   }
@@ -364,9 +422,15 @@ class FoodData {
 
     String category = item.keys.first;
 
+
+
+
     List<String> subCategoryList = [];
 
     for (int j = 0; j < item[category].length; j++) {
+
+
+
      subCategoryList.add(item[category][j].toString());
     }
 
@@ -390,6 +454,9 @@ class FoodData {
         .collection("users_data")
         .doc(user.uid)
         .delete();
+
+
+
 
     return false;
 

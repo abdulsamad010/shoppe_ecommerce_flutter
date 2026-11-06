@@ -11,12 +11,15 @@ class FlashSalesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: EdgeInsets.all(4.w),
       height: 114.h,
       width: 109.w,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.r),
+
+
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 5),
@@ -26,6 +29,8 @@ class FlashSalesCard extends StatelessWidget {
         ],
         color: white
       ),
+
+
       child: Stack(
         alignment: .topRight,
         children:[
@@ -37,7 +42,9 @@ class FlashSalesCard extends StatelessWidget {
           ),
           clipBehavior: Clip.hardEdge,
           child: Image.network("$image",
-          fit: BoxFit.cover,
+
+
+            fit: BoxFit.cover,
             height: 103.h,
             width: 99.w,
             errorBuilder: (context, error, stackTrace) =>
