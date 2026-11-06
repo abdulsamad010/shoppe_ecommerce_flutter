@@ -658,48 +658,54 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 
 
-      await getFoodsObject.storeReview({
-        "rating":state.orderRaiting,
-        "review":event.ratingValue,
-        "reviewerImage":state.profileImage,
-        "order_id":state.ordersPlaced[event.ordersPlacedIndex]["order_id"]
-      });
+      try {
+        await getFoodsObject.storeReview({
+          "rating": state.orderRaiting,
+          "review": event.ratingValue,
+          "reviewerImage": state.profileImage,
+          "order_id": state.ordersPlaced[event.ordersPlacedIndex]["order_id"]
+        });
+      }
+      catch(e) {
+        print(e);
+      }
 
-      print("bloc completed");
+        print("bloc completed");
 
-      add(GetProducts());
+        add(GetProducts());
 
-      emit(AppState(
-        flashSale: state.flashSale,
-        isProceed: false,
-        isSubmitted: true,
-        subCategories: state.subCategories,
-        filters: state.filters,
-        filteredProducts: state.filteredProducts,
-        orderRaiting: state.orderRaiting,
-        ordersPlaced: state.ordersPlaced,
-        profileImage: state.profileImage,
-        voucherUsedIndex: state.voucherUsedIndex,
-        selectedDeliveryIndex: state.selectedDeliveryIndex,
-        delivery_methods: state.delivery_methods,
-        voucher: state.voucher,
-        cartProgress:state.cartProgress,
-        contact: state.contact,
-        address: state.address,
-        favoriteProductsIds: state.favoriteProductsIds,
-        cart: state.cart,
-        lastSearch: state.lastSearch,
-        searchHistory: state.searchHistory,
-        searchedProducts: state.searchedProducts,
-        fleshSalesProducts: state.fleshSalesProducts,
-        categories: state.categories,
-        topSoldProducts: state.topSoldProducts,
-        newArrivalProducts: state.newArrivalProducts,
-        products: state.products,
-        screenIndex: state.screenIndex,
-       isAbscure: state.isAbscure,
-        suffixIcon: state.suffixIcon,
-      ));
+        emit(AppState(
+          flashSale: state.flashSale,
+          isProceed: false,
+          isSubmitted: true,
+          subCategories: state.subCategories,
+          filters: state.filters,
+          filteredProducts: state.filteredProducts,
+          orderRaiting: state.orderRaiting,
+          ordersPlaced: state.ordersPlaced,
+          profileImage: state.profileImage,
+          voucherUsedIndex: state.voucherUsedIndex,
+          selectedDeliveryIndex: state.selectedDeliveryIndex,
+          delivery_methods: state.delivery_methods,
+          voucher: state.voucher,
+          cartProgress:state.cartProgress,
+          contact: state.contact,
+          address: state.address,
+          favoriteProductsIds: state.favoriteProductsIds,
+          cart: state.cart,
+          lastSearch: state.lastSearch,
+          searchHistory: state.searchHistory,
+          searchedProducts: state.searchedProducts,
+          fleshSalesProducts: state.fleshSalesProducts,
+          categories: state.categories,
+          topSoldProducts: state.topSoldProducts,
+          newArrivalProducts: state.newArrivalProducts,
+          products: state.products,
+          screenIndex: state.screenIndex,
+          isAbscure: state.isAbscure,
+          suffixIcon: state.suffixIcon,
+        ));
+
     });
 
 
