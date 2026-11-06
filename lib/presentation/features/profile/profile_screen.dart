@@ -387,7 +387,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 432.w,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.newArrivalProducts.length>3 ? 3 : state.categories.length,
+                        itemCount: state.newArrivalProducts.isNotEmpty? state.newArrivalProducts.length>3 ? 3 : state.categories.length : 0,
                         itemBuilder: (context,index){
                           return GestureDetector(
                             onTap: (){
@@ -533,7 +533,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               childAspectRatio: 1,
                               mainAxisSpacing: 0,
                               crossAxisCount: 4),
-                          itemCount: state.fleshSalesProducts.length>4 ? 4 : state.categories.length,
+                          itemCount: state.fleshSalesProducts.isNotEmpty? state.fleshSalesProducts.length>4 ? 4 : state.categories.length : 0,
                           itemBuilder: (context,index){
                             return Padding(
                                 padding: EdgeInsets.only(left: 3,right:3.w,),

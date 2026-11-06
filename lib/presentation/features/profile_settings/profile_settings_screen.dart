@@ -32,7 +32,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   final formKey = GlobalKey<FormState>();
   final getFoodsObject=GetFoods(repository: FoodRepositoryImpl());
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
+  final oldPasswordController = TextEditingController();
   final passwordController = TextEditingController();
 
   String? validateName(String? value) {
@@ -45,17 +45,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
     return null;
   }
 
-  String? validateEmail(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Please enter your email';
-    }
-    if (!RegExp(
-      r'^[\w.-]+@([\w-]+\.)+[\w-]{2,}$',
-    ).hasMatch(value.trim())) {
-      return 'Please enter a valid email address';
-    }
-    return null;
-  }
+
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
@@ -70,10 +60,12 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   @override
   void dispose() {
     nameController.dispose();
-    emailController.dispose();
     passwordController.dispose();
+    oldPasswordController.dispose();
     super.dispose();
   }
+
+
 
   bool isSearching=false;
 
@@ -86,6 +78,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+
+
+
       create: (context)=>SignupBloc(getFoodsObject: getFoodsObject),
       child: BlocConsumer<SignupBloc,SignupState>(
         listener: (context, signupState) {
@@ -96,6 +91,9 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                     'Profile updated successfully'),
               ),
             );
+
+
+
             Navigator.of(context, rootNavigator: true).pop();
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) =>
@@ -106,7 +104,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                    'Profile updated failed, please fresh login first and than update!!'),
+                    'Profile updated failed, please enter correct password or check you connection!!'),
               ),
             );
           }
@@ -178,16 +176,22 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                       width: 4.w,
                                     ),
                                   ),
+
+
+
                                   padding: EdgeInsets.all(2.5.w),
                                   child: Container(
                                     clipBehavior: Clip.hardEdge,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle
                                       ),
+
+
                                       child: signupState.picker!=null?
                                       Image.file(fit: BoxFit.cover,File(signupState.picker!.path)
                                       ) : Image.network(width: 105.w,
-                                        height: 105.w,"${state.profileImage}",fit: BoxFit.cover,)),
+                                        height: 105.w,"${state.profileImage}",fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) => SizedBox(),)),
                                 ),
                                 GestureDetector(
                                   onTap: () async{
@@ -218,6 +222,20 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                 ),
                               ],
                             ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             SizedBox(height: 20.h),
                             TextFormField(
                               controller: nameController,
@@ -237,11 +255,18 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                               validator: validateName,
                             ),
                             SizedBox(height: 8.h),
+
+
+
+
+
+
                             TextFormField(
-                              controller: emailController,
+                              //controller: emailController,
+                              readOnly: true,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                hintText: 'Email',
+                                hintText: '${state.email}',
                                 filled: true,
                                 fillColor: const Color(0xFFF0F2FC),
                                 contentPadding: EdgeInsets.symmetric(
@@ -253,14 +278,20 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
-                              validator: validateEmail,
+                             // validator: validateEmail,
                             ),
+
+
+
                             SizedBox(height: 8.h),
+
+
+
                             TextFormField(
-                              controller: passwordController,
+                              controller: oldPasswordController,
                               obscureText: true,
                               decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: 'Old Password',
                                 filled: true,
                                 fillColor: const Color(0xFFF0F2FC),
                                 contentPadding: EdgeInsets.symmetric(
@@ -274,12 +305,38 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                               ),
                               validator: validatePassword,
                             ),
-                            SizedBox(height: 250.h),
+                            SizedBox(height: 8.h),
+
+
+
+
+
+
+                            TextFormField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'New Password',
+                                filled: true,
+                                fillColor: const Color(0xFFF0F2FC),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                  vertical: 14.h,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: validatePassword,
+                            ),
+                            SizedBox(height: 200.h),
                             SizedBox(
                               width: double.infinity,
                               height: 44.h,
                               child: ElevatedButton(
                                 onPressed: () {
+
 
 
                                   if(formKey.currentState!.validate()){
@@ -300,7 +357,8 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                           sGender: "",
                                           sImagePicker: "",
                                           sPhone: "",
-                                          sEmail: emailController.text,
+                                          sEmail: state.email,
+                                          oSPassword:oldPasswordController.text,
                                           sPassword: passwordController.text,
                                         name:nameController.text,
                                       ));
