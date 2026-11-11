@@ -1,318 +1,402 @@
-# SHOPPE — Flutter E-Commerce Application
+# 🛍️ Shoppe – Flutter E-Commerce Application
 
-A modern Flutter e-commerce application built with Firebase and the BLoC state-management pattern. Shoppe brings product discovery, category browsing, search, product variations, favourites, cart management, and other shopping-related workflows together in a mobile shopping experience.
+<p align="center">
+  <strong>A Modern E-Commerce Experience Built with Flutter, Firebase & BLoC</strong>
+</p>
 
-> **Project note:** This README describes implementation details confirmed for `shoppe_ecommerce_flutter`. It does not claim unverified integrations such as a specific online payment gateway, shipment-tracking provider, or production deployment.
+<p align="center">
+  Discover products, manage your shopping cart, explore categories, and stay updated with notifications.
+</p>
 
----
-
-## Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Implemented Functionality](#implemented-functionality)
-3. [Technology Stack](#technology-stack)
-4. [Application Architecture](#application-architecture)
-5. [State Management](#state-management)
-6. [Firebase and Firestore](#firebase-and-firestore)
-7. [Getting Started](#getting-started)
-8. [Firebase Configuration](#firebase-configuration)
-9. [Run the Application](#run-the-application)
-10. [Build a Release APK](#build-a-release-apk)
-11. [Important Implementation Notes](#important-implementation-notes)
-12. [Project Structure](#project-structure)
-13. [Troubleshooting](#troubleshooting)
-14. [Future Improvements](#future-improvements)
-15. [Contributions](#contributions)
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-Framework-02569B?logo=flutter&logoColor=white" />
+  <img src="https://img.shields.io/badge/Dart-Language-0175C2?logo=dart&logoColor=white" />
+  <img src="https://img.shields.io/badge/Firebase-Backend-FFCA28?logo=firebase&logoColor=black" />
+  <img src="https://img.shields.io/badge/BLoC-State%20Management-6C63FF" />
+  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white" />
+</p>
 
 ---
 
-## Project Overview
+## 📖 About the Project
 
-**Shoppe** is a Flutter-based e-commerce application that uses Firebase services as its backend and BLoC for application state management.
+**Shoppe** is a Flutter-based e-commerce application developed using Dart, Firebase, and the BLoC state-management pattern.
 
-The application includes shopping workflows such as:
+The application provides an organized shopping experience with features such as product browsing, category filtering, product search, product variations, favourites, cart management, order-related workflows, and user profile management.
 
-- Browsing products and categories.
-- Exploring product details and available variations.
-- Searching for products and maintaining search history.
-- Managing favourite products.
-- Selecting product quantity, size, and colour.
-- Adding and updating products in the shopping cart.
-- Accessing shopping-related information such as flash sales, vouchers, and delivery methods.
-- Managing user-related information and order data through Firebase.
+Firebase services provide authentication, cloud-based data storage, and push notification capabilities.
 
-The interface is built with Flutter's widget system and uses responsive sizing and custom typography packages.
+The project follows a layered structure that separates data operations, domain components, and presentation logic to support maintainability and future development.
 
 ---
 
-## Implemented Functionality
+## ✨ Key Features
 
-The following functionality reflects the application code and Firebase operations confirmed during development.
+### 🛒 Shopping & Product Discovery
 
-### 1. Product Browsing
+- Browse available products.
+- Explore product categories and subcategories.
+- View product details.
+- Discover new arrivals and top products.
+- Explore flash-sale products.
+- Filter products by category, subcategory, and gender.
+- Search products using text queries.
+- Maintain search history.
 
-- Retrieves product data from the Cloud Firestore `products` collection.
-- Displays product information such as name, image, price, available quantity, sizes, and colours.
-- Supports product discovery through the shop interface.
-- Includes product sections such as new arrivals, top products, and flash-sale products.
-- Provides product-detail and product-variation workflows.
+### 🎨 Product Variations
 
-### 2. Categories and Filtering
+- Select product quantities.
+- Choose available sizes.
+- Select product colours.
+- Manage temporary product-selection information.
 
-- Supports product categories and subcategories.
-- Includes category, subcategory, and gender-based filtering.
-- Provides category-oriented product browsing.
+### ❤️ Wishlist & Shopping Cart
 
-### 3. Product Search
+- Add products to favourites.
+- Remove products from favourites.
+- Add products to the shopping cart.
+- Update cart information.
+- Remove cart items.
+- Maintain selected product variations.
 
-- Allows users to search for products using text.
-- Uses the BLoC event/state flow to process search requests and update displayed results.
-- Maintains search-history data.
-- Displays a no-matching-product message when a search returns no results.
+### 👤 Authentication & Profile
 
-### 4. Product Variations
+- Firebase Authentication integration.
+- Login and signup workflows.
+- Password-related account operations.
+- User profile management.
+- Profile settings.
+- Address and contact information management.
 
-The product-variation workflow supports selection of:
+### 📦 Orders & Reviews
 
-- Quantity.
-- Size.
-- Colour.
+- Store and retrieve order information.
+- Access order-related information.
+- Update product stock when an order is stored.
+- Submit product ratings and reviews.
+- Manage order receiving and review workflows.
 
-The selected values are maintained in the application's `cartProgress` state and are used as part of the cart workflow.
+### 🔔 Push Notifications
 
-**Important distinction:** A product's Firestore `quantity` represents its available stock, while `cartProgress['quantity']` represents the quantity selected by the user. These are separate values.
+Integrated **Firebase Cloud Messaging (FCM)** to support notifications across different application states.
 
-### 5. Shopping Cart
+| Application State | Notification Handling |
+|---|---|
+| Foreground | Displays notification information through an in-app SnackBar |
+| Background | Supports system notifications |
+| Terminated | Supports system notifications when the user opens the app from a notification |
 
-The cart workflow supports:
+Additional notification functionality:
 
-- Adding products to the cart.
-- Updating cart information.
-- Removing cart items.
-- Maintaining product variation information such as size and colour.
-- Retrieving user cart data from Firestore.
+- Requests notification permission.
+- Retrieves the device's FCM registration token.
+- Handles foreground messages.
+- Registers a background message handler.
+- Handles notification interactions.
+- Processes initial messages when launching through a notification.
 
-Cart-related data is associated with the signed-in user's record in `users_data`.
+*Note: Background and terminated notification display requires an appropriately configured FCM notification payload and platform configuration. FCM integration alone does not automatically trigger notifications when Firestore data changes.*
 
-### 6. Favourites
+### 📤 Product Sharing
 
-- Supports adding products to favourites.
-- Supports removing products from favourites.
-- Retrieves and updates favourite-product data through the Firebase data layer.
-
-### 7. Flash Sales and Product Sections
-
-- Retrieves flash-sale information from Firestore.
-- Supports product sections such as top products, new arrivals, and flash sales.
-- Includes See All navigation for these product sections.
-
-### 8. Vouchers and Delivery Information
-
-The Firebase data layer includes operations for:
-
-- Retrieving voucher information.
-- Retrieving delivery methods.
-
-The availability and presentation of these options depend on the corresponding application screens and data.
-
-### 9. Orders and Reviews
-
-The data layer includes operations for:
-
-- Storing order information.
-- Retrieving order-related data.
-- Updating product stock when an order is stored.
-- Managing product reviews and ratings.
-
-A particular payment gateway or third-party shipment-tracking integration is not specified here because it has not been confirmed.
-
-### 10. User Account and Profile
-
-The application uses Firebase Authentication for authentication-related operations, including access to the current user and account email/password workflows.
-
-The Firebase data layer also contains operations related to:
-
-- User profile information.
-- Address and contact information.
-- Account deletion.
-
-Email changes may require the user to complete Firebase's email-verification process.
-
-### 11. Share Functionality
-
-The application uses the `share_plus` package to open the platform's native sharing interface and share text.
-
-A product name, price, or product URL can be included in the shared text when available.
+- Uses the `share_plus` package.
+- Opens the device's native sharing interface.
+- Supports sharing product-related information.
 
 ---
 
-## Technology Stack
+## 🧰 Technology Stack
 
-| Technology / Package | Purpose |
+| Technology | Purpose |
 |---|---|
 | Flutter | Cross-platform application development |
-| Dart | Application programming language |
+| Dart | Programming language |
 | Firebase Core | Firebase initialization |
 | Firebase Authentication | User authentication |
-| Cloud Firestore | Cloud database and application data |
-| flutter_bloc | BLoC-based state management |
-| flutter_screenutil | Responsive sizing |
-| google_fonts | Typography and font styling |
-| share_plus | Native platform sharing |
-
-Exact package versions are maintained in `pubspec.yaml`.
-
----
-
-## Application Architecture
-
-The application follows a feature-oriented Flutter structure with a central BLoC state-management layer and a Firebase data-access layer.
-
-### Presentation Layer
-
-The presentation layer contains UI screens and reusable widgets.
-
-Examples confirmed in the application include:
-
-- `SearchScreen`
-- `ShopScreen`
-- `ProductVariationsScreen`
-- `NewItemsCard`
-
-### BLoC Layer
-
-The central application BLoC coordinates application events, state updates, and data operations.
-
-The main BLoC-related files include:
-
-- `app_bloc.dart`
-- `app_event.dart`
-- `app_state.dart`
-
-The application uses:
-
-- `AppBloc` to handle application events.
-- `AppEvent` classes to represent user actions and requested operations.
-- `AppState` to expose current application data to the UI.
-- `BlocBuilder` and `BlocConsumer` to rebuild UI and respond to state changes.
-
-### Firebase Data Layer
-
-The `FoodData` data-access class contains Firestore operations for products and other application data.
-
-This separation allows UI screens to dispatch events rather than directly performing every database operation.
+| Cloud Firestore | Cloud database |
+| Firebase Cloud Messaging | Push notifications |
+| flutter_bloc | State management |
+| flutter_screenutil | Responsive UI sizing |
+| google_fonts | Custom typography |
+| share_plus | Native sharing functionality |
 
 ---
 
-## State Management
+## 🏗️ Project Architecture
 
-Shoppe uses the BLoC pattern through the `flutter_bloc` package.
+Shoppe follows a layered project structure that separates data access, domain components, and presentation logic.
 
-A typical interaction follows this sequence:
+### 1. Data Layer
 
-1. The user performs an action in the UI.
-2. The UI dispatches an event to `AppBloc`.
-3. `AppBloc` processes the event and performs the required data operation.
-4. The BLoC emits an updated `AppState`.
-5. Widgets listening to the BLoC rebuild using the updated state.
+Located in `lib/data/`.
 
-The central `AppState` maintains application data including:
+Responsible for handling application data operations.
 
-- Products.
-- Categories and subcategories.
-- Cart items.
-- Temporary cart-selection progress.
-- Favourite products.
-- Search results and search history.
-- Flash-sale information.
-- Orders.
-- Delivery information.
-- Vouchers.
-- User and profile-related information.
+Main components:
 
-### State Preservation Consideration
+- **Datasources:** Firebase and other data-access operations.
+- **Models:** Application data models.
+- **Repositories:** Repository implementations for data operations.
 
-When creating a new `AppState` inside a BLoC event handler, existing state fields that should remain available must be passed into the new state.
+The `FoodData` class handles Firestore-related operations, while `FoodRepositoryImpl` provides the repository implementation.
 
-For example, an event that updates an unrelated field should preserve `cartProgress` if the current product-selection workflow must remain active:
+### 2. Domain Layer
 
-```dart
-emit(AppState(
-  // Preserve the other required state fields.
-  cartProgress: state.cartProgress,
-  // Include the remaining state values.
-));
+Located in `lib/domain/`.
+
+Provides a dedicated layer for domain-related application components and business logic.
+
+### 3. Presentation Layer
+
+Located in `lib/presentation/`.
+
+Contains the application's UI, state management, reusable widgets, and feature-specific screens.
+
+It includes:
+
+- Core application components.
+- BLoC state management.
+- Notification service.
+- Shared colours and text styles.
+- Reusable widgets.
+- Feature-specific screens and workflows.
+
+### 4. State Management
+
+The application uses the BLoC pattern through the `flutter_bloc` package.
+
+It includes:
+
+- `AppBloc` for centralized application-level state management.
+- `AuthBloc` for authentication-related operations.
+- `ProfileBloc` for profile-related operations.
+- `SignupBloc` for signup-related operations.
+
+The application uses `BlocBuilder` and `BlocConsumer` to manage UI updates and respond to state changes.
+
+### Application Workflow
+
+```text
+             User Interaction
+                    |
+                    v
+             Presentation Layer
+                    |
+                    v
+               BLoC Events
+                    |
+                    v
+              BLoC Processing
+                    |
+                    v
+             Repository Layer
+                    |
+                    v
+              Data Sources
+                    |
+                    v
+             Firebase / Firestore
+                    |
+                    v
+              Updated State
+                    |
+                    v
+                 UI Update
 ```
 
-If `cartProgress` is omitted, the `AppState` constructor's default values are used. In the current implementation, those defaults contain null values for `productId`, `quantity`, `size`, and `color`.
+---
 
-This is important when debugging product-variation and cart-quantity behaviour.
+## 📁 Project Structure
+
+The following structure reflects the actual source-code organization provided for the project, with generated and local development files excluded.
+
+```text
+shoppe_ecommerce_flutter/
+│
+├── android/
+│   └── app/
+│       └── src/
+│           ├── debug/
+│           ├── main/
+│           │   ├── java/
+│           │   ├── kotlin/
+│           │   ├── res/
+│           │   └── AndroidManifest.xml
+│           └── profile/
+│
+├── assets/
+│   ├── icons/
+│   ├── images/
+│   └── logo/
+│
+├── ios/
+│
+├── lib/
+│   │
+│   ├── data/
+│   │   ├── datasources/
+│   │   │   └── food_data.dart
+│   │   ├── models/
+│   │   └── repositories/
+│   │       └── food_repository_impl.dart
+│   │
+│   ├── domain/
+│   │
+│   ├── presentation/
+│   │   │
+│   │   ├── core/
+│   │   │   ├── bloc/
+│   │   │   │   └── app_bloc/
+│   │   │   │       ├── app_bloc.dart
+│   │   │   │       ├── app_event.dart
+│   │   │   │       └── app_state.dart
+│   │   │   │
+│   │   │   ├── colors/
+│   │   │   │   └── app_colors.dart
+│   │   │   │
+│   │   │   ├── notification_service/
+│   │   │   │   └── notification_service.dart
+│   │   │   │
+│   │   │   ├── text_styles/
+│   │   │   │   └── app_text_styles.dart
+│   │   │   │
+│   │   │   └── widgets/
+│   │   │
+│   │   └── features/
+│   │       ├── about/
+│   │       ├── address/
+│   │       ├── bottom_navigation_bar/
+│   │       ├── cart/
+│   │       ├── categories_filtering/
+│   │       ├── hello_card/
+│   │       ├── history/
+│   │       ├── login_email/
+│   │       │   └── bloc/
+│   │       ├── login_password/
+│   │       ├── my_activity/
+│   │       ├── password_recovery/
+│   │       ├── product_details/
+│   │       ├── product_variations/
+│   │       ├── profile/
+│   │       │   └── bloc/
+│   │       ├── profile_settings/
+│   │       ├── ready_card/
+│   │       ├── review/
+│   │       ├── search/
+│   │       ├── see_all/
+│   │       ├── settings/
+│   │       ├── shop/
+│   │       ├── signup/
+│   │       │   └── bloc/
+│   │       ├── start/
+│   │       ├── terms/
+│   │       ├── to_receive/
+│   │       ├── track/
+│   │       ├── voucher/
+│   │       └── voucher_payment/
+│   │
+│   ├── firebase_options.dart
+│   └── main.dart
+│
+├── test/
+├── web/
+│
+├── .gitignore
+├── analysis_options.yaml
+├── firebase.json
+├── LICENSE
+├── pubspec.yaml
+├── pubspec.lock
+├── README.md
+└── shoppe_ecommerce_flutter.iml
+```
 
 ---
 
-## Firebase and Firestore
+## 🔥 Firebase Integration
 
-Shoppe uses Firebase as its backend.
+Shoppe uses Firebase services for authentication, cloud data management, and push notifications.
 
 ### Firebase Services
 
-- **Firebase Authentication:** Handles authentication-related operations.
-- **Cloud Firestore:** Stores and retrieves product, user, shopping, and other application data.
-- **Firebase Core:** Initializes Firebase in the Flutter application.
+| Service | Usage |
+|---|---|
+| Firebase Core | Initialize Firebase |
+| Firebase Authentication | Manage authentication |
+| Cloud Firestore | Store and retrieve application data |
+| Firebase Cloud Messaging | Handle push notifications |
 
-### Firestore Collections Used
+### Firestore Collections
 
-The following collection names are referenced by the application's data-access implementation:
+The following collection names are referenced in the application's data-access implementation:
 
 | Collection | Purpose |
 |---|---|
 | `products` | Product records and stock information |
-| `users_data` | User-related shopping and profile data |
-| `app_events` | Application event data, including flash-sale information |
+| `users_data` | User profile and shopping-related data |
+| `app_events` | Application event information |
 | `delivery_methods` | Delivery-method information |
 | `voucher` | Voucher information |
 | `app_orders` | Order records |
 
-Flash-sale data is accessed through the `app_events/flash_sale` document path.
+Flash-sale information is accessed through:
 
-The user's cart and related data are accessed through the corresponding `users_data/{uid}` document.
+```text
+app_events/flash_sale
+```
 
-### Product Data
+User-specific information is accessed through:
 
-Product records are read from the `products` collection. The product model and UI use fields such as product name, image URL, price, quantity, sizes, and colours.
+```text
+users_data/{uid}
+```
 
-Make sure Firestore document field names and value types match the fields expected by the application's product model.
+### Firebase Setup
 
-### User Data
+1. Create a Firebase project through the [Firebase Console](https://console.firebase.google.com/).
+2. Register your Android application using its configured application ID.
+3. Enable Firebase Authentication.
+4. Create a Cloud Firestore database.
+5. Configure the required collections and documents.
+6. Configure Firebase Cloud Messaging.
+7. Apply appropriate Firestore Security Rules.
 
-User-specific information is associated with the authenticated user's Firebase UID.
+### FlutterFire Configuration
 
-Some update operations require the relevant `users_data/{uid}` document to exist. If the document has not been created, a Firestore `.update()` operation can fail. Create or initialize the user document as part of the appropriate account setup flow, or use a write operation that creates the document when that is intended.
+Install FlutterFire CLI:
 
-### Security
+```bash
+dart pub global activate flutterfire_cli
+```
 
-Before deploying the application:
+Run:
 
-- Configure Firestore Security Rules.
-- Restrict user-specific documents to their authenticated owner.
-- Validate data before allowing users to update products, cart items, or orders.
-- Do not use unrestricted test rules in a production application.
-- Never commit private service-account credentials or secret keys to a public repository.
+```bash
+flutterfire configure
+```
+
+This generates or updates the Firebase configuration file:
+
+```text
+lib/firebase_options.dart
+```
+
+Make sure Firebase is initialized before accessing Firebase services.
 
 ---
 
-## Getting Started
+## ⚙️ Getting Started
 
 ### Prerequisites
 
 Install the following tools:
 
-- Flutter SDK.
-- Dart SDK (included with Flutter).
-- Android Studio or Visual Studio Code.
-- Android SDK and an Android emulator, or a physical Android device.
-- A Firebase project.
-- Git.
+- Flutter SDK
+- Dart SDK
+- Android Studio or Visual Studio Code
+- Android SDK
+- Git
+- A Firebase project
 
 Verify your Flutter installation:
 
@@ -320,79 +404,31 @@ Verify your Flutter installation:
 flutter doctor
 ```
 
-### Clone the Repository
-
-Replace the placeholder with the actual repository URL:
+### 1. Clone the Repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
+git clone https://github.com/abdulsamad010/shoppe_ecommerce_flutter.git
 ```
 
-Open the project directory:
+Navigate to the project directory:
 
 ```bash
 cd shoppe_ecommerce_flutter
 ```
 
-### Install Dependencies
+### 2. Install Dependencies
 
 ```bash
 flutter pub get
 ```
 
----
+### 3. Configure Firebase
 
-## Firebase Configuration
+Follow the Firebase configuration instructions above.
 
-The project uses Firebase configuration generated for the Flutter application.
+Ensure the Android application is registered with the correct application ID.
 
-### 1. Create a Firebase Project
-
-1. Open the Firebase Console: https://console.firebase.google.com/
-2. Create a Firebase project or select an existing project.
-3. Add the Android application using the Android application ID configured in the project.
-4. Enable the Firebase services required by the application.
-
-### 2. Configure FlutterFire
-
-If FlutterFire CLI is not configured on your development machine, install it:
-
-```bash
-dart pub global activate flutterfire_cli
-```
-
-Run the configuration command from the project root:
-
-```bash
-flutterfire configure
-```
-
-Select the Firebase project and the platforms required by your application.
-
-This process generates or updates the Firebase configuration file, commonly:
-
-```text
-lib/firebase_options.dart
-```
-
-The application should initialize Firebase with the generated configuration before using Firebase services.
-
-### 3. Enable Firebase Services
-
-In the Firebase Console:
-
-- Enable **Authentication** and configure the sign-in providers used by the application.
-- Create a **Cloud Firestore** database.
-- Add the required collections and documents.
-- Configure Firestore Security Rules for authenticated access.
-
-Collection names and document fields must match the application's data-access code.
-
----
-
-## Run the Application
-
-Start an Android emulator or connect a physical device.
+### 4. Run the Application
 
 Check connected devices:
 
@@ -406,13 +442,11 @@ Run the application:
 flutter run
 ```
 
-For development, hot reload can be used after code changes by pressing `r` in the running Flutter terminal.
-
 ---
 
-## Build a Release APK
+## 📱 Build Release APK
 
-To generate a standard release APK:
+Generate a release APK using:
 
 ```bash
 flutter clean
@@ -420,62 +454,69 @@ flutter pub get
 flutter build apk --release
 ```
 
-After a successful build, the APK is generated at:
+The generated APK will be available at:
 
 ```text
 build/app/outputs/flutter-apk/app-release.apk
 ```
 
-### Split APKs by Architecture
-
-To generate separate APKs for supported Android CPU architectures:
+To generate architecture-specific APKs:
 
 ```bash
 flutter build apk --release --split-per-abi
 ```
 
-The generated APK files are placed in:
-
-```text
-build/app/outputs/flutter-apk/
-```
-
-### Release Signing
-
-For distribution outside local testing, configure Android release signing with your own keystore and keep the keystore and passwords private. Do not commit signing credentials to GitHub.
+For production distribution, configure Android release signing and keep the keystore and passwords private.
 
 ---
 
-## Important Implementation Notes
+## 🔔 Notification Implementation
 
-### Product Stock vs. Selected Cart Quantity
+The notification service is located at:
 
-These two values have different meanings:
+```text
+lib/presentation/core/notification_service/notification_service.dart
+```
 
-- `product.quantity`: available stock for a product.
-- `cartProgress['quantity']`: quantity currently selected by the user.
+It handles:
 
-A product can have valid stock in Firestore while the temporary cart-selection quantity is still null if it has not been initialized or if a newly emitted `AppState` resets `cartProgress`.
+- Requesting notification permissions.
+- Retrieving the FCM registration token.
+- Listening for foreground messages.
+- Registering background message handling.
+- Handling notification taps.
+- Processing initial messages.
 
-### Product Variations
+### Notification Behaviour
 
-The variation screen relies on the selected product's available sizes and colours. Make sure the relevant lists are populated before accessing their first elements or building list items.
+| App State | Expected Behaviour |
+|---|---|
+| Foreground | In-app SnackBar |
+| Background | System notification |
+| Terminated | System notification |
 
-The item count for a size list must be based on the product's `sizes` list, not its `colors` list.
+**Important:** Notification delivery requires a valid FCM sending source. Firestore changes do not automatically generate FCM messages without a separate trusted sending mechanism.
 
-### User Document Updates
+---
 
-Firestore `.update()` requires an existing document. If user-specific data is missing, initialize the document before attempting to update it.
+## 🛡️ Security Considerations
 
-### Email Verification
+Before deploying the application:
 
-Firebase's `verifyBeforeUpdateEmail()` flow sends a verification request. The email address change is not necessarily complete immediately after calling the method.
+- Configure restrictive Firestore Security Rules.
+- Restrict user-specific data to authenticated owners.
+- Validate data before allowing cart and order updates.
+- Protect sensitive credentials and private configuration files.
+- Never expose Firebase service-account private keys in the Flutter application.
+- Review database access permissions before production deployment.
 
-### Native Plugins
+---
 
-After adding a native Flutter plugin such as `share_plus`, fully stop and rebuild the application. Hot reload alone does not register a newly added native plugin.
+## 🧪 Troubleshooting
 
-For example:
+### MissingPluginException
+
+If Flutter cannot find a native plugin implementation, completely stop the application and rebuild:
 
 ```bash
 flutter clean
@@ -483,147 +524,75 @@ flutter pub get
 flutter run
 ```
 
----
+### Firebase Initialization Problems
 
-## Project Structure
+Check:
 
-The following is a high-level guide to confirmed areas of the project. Refer to the actual repository for the complete directory and file layout.
+- `firebase_options.dart` exists.
+- Firebase initialization happens before Firebase services are used.
+- The Android application ID matches Firebase configuration.
+- Required Firebase services are enabled.
 
-```text
-shoppe_ecommerce_flutter/
-|
-├── android/
-├── ios/
-├── lib/
-│   |
-│   ├── core/
-│   │   ├── bloc/
-│   │   │   └── app_bloc/
-│   │   │       ├── app_bloc.dart
-│   │   │       ├── app_event.dart
-│   │   │       └── app_state.dart
-│   │   ├── colors/
-│   │   └── text_styles/
-│   │
-│   ├── presentation/
-│   │   ├── core/
-│   │   │   └── widgets/
-│   │   │       └── new_items_card.dart
-│   │   └── features/
-│   │       └── shop/
-│   │           └── shop_screen.dart
-│   │
-│   └── firebase_options.dart
-│
-├── assets/
-├── test/
-├── pubspec.yaml
-└── README.md
-```
+### Firestore Update Errors
 
-This is an illustrative overview of known project areas, not a complete generated directory listing. Keep this section synchronized with the actual repository when adding or moving files.
+Check whether the target document exists and whether the authenticated user's UID is correct.
+
+### Notification Issues
+
+Check:
+
+- Notification permission is granted.
+- FCM is initialized correctly.
+- The device has a valid registration token.
+- The notification payload is correctly configured.
+- Platform-specific notification settings are enabled.
 
 ---
 
-## Troubleshooting
-
-### 1. MissingPluginException
-
-Example:
-
-```text
-MissingPluginException(
-  No implementation found for method share
-)
-```
-
-**Possible solution:**
-
-```bash
-flutter clean
-flutter pub get
-flutter run
-```
-
-Fully stop the application before running it again.
-
-### 2. Firestore Document Not Found During Update
-
-An `.update()` call fails when the target document does not exist.
-
-**Check:**
-
-- Whether the authenticated user's UID is correct.
-- Whether `users_data/{uid}` exists.
-- Whether the account initialization flow creates the required document.
-
-### 3. Null Cart Selection Values
-
-If a comparison involving `cartProgress['quantity']` fails because the value is null, inspect the state lifecycle.
-
-**Check:**
-
-- Whether the selection is initialized when opening the product details or variation screen.
-- Whether another BLoC event emits a new `AppState` without preserving `cartProgress`.
-- Whether the product's size and colour lists contain valid values.
-
-### 4. Firebase Initialization Issues
-
-**Check:**
-
-- Whether `firebase_options.dart` exists and is up to date.
-- Whether Firebase is initialized before Firebase services are used.
-- Whether the Android application ID matches the Firebase Android app configuration.
-- Whether the required Firebase services are enabled.
-
-### 5. Release APK Build Issues
-
-Run:
-
-```bash
-flutter doctor
-flutter clean
-flutter pub get
-flutter build apk --release
-```
-
-Read the first actual build error in the terminal output; later errors may be consequences of the initial failure.
-
----
-
-## Future Improvements
+## 🚀 Future Improvements
 
 Potential areas for further development include:
 
-- Improving form validation and error handling.
-- Adding automated unit and widget tests.
-- Improving loading, empty, and error states.
-- Reviewing Firestore Security Rules and data validation.
-- Improving cart-state consistency across BLoC events.
-- Adding product deep links for sharing.
-- Completing release signing and deployment preparation.
-- Adding documentation for the exact Firestore document schemas.
+- Expanding unit and widget testing.
+- Improving loading, error, and empty states.
+- Further refining state management.
+- Documenting Firestore schemas.
+- Strengthening data validation and security rules.
+- Integrating a payment gateway.
+- Improving product sharing through deep links.
+- Preparing the application for production deployment.
 
-These are suggestions for future work, not claims that the features are already implemented.
-
----
-
-## Contributions
-
-Before submitting changes:
-
-1. Keep the existing BLoC architecture consistent.
-2. Preserve required `AppState` fields when emitting new states.
-3. Keep Firestore field names aligned with the data models.
-4. Test product browsing, search, variations, favourites, and cart workflows after making related changes.
-5. Avoid committing Firebase secrets, signing keys, or private credentials.
+These are potential enhancements, not claims of currently implemented functionality.
 
 ---
 
-## License
+## 🤝 Contributions
 
-Add the appropriate license information for this repository before redistributing or publishing the project.
+Suggestions and contributions are welcome.
+
+When contributing:
+
+1. Maintain consistency with the existing project architecture.
+2. Follow the established BLoC event/state pattern.
+3. Preserve necessary application state during updates.
+4. Keep Firestore field names consistent with the data models.
+5. Test affected application workflows after changes.
+6. Never commit private credentials or sensitive configuration files.
 
 ---
 
-**Built with Flutter, Dart, Firebase, and BLoC.**
+## 📄 License
+
+Refer to the repository's `LICENSE` file for licensing information.
+
+---
+
+<div align="center">
+
+<h2>🛍️ SHOPPE</h2>
+
+  <p>Built with Flutter, Dart, Firebase & BLoC.</p>
+
+  <p><em>Making everyday shopping simpler through technology.</em></p>
+
+</div>
