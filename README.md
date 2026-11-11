@@ -1,7 +1,7 @@
 # 🛍️ Shoppe – Flutter E-Commerce Application
 
 <p align="center">
-  <strong>A Modern E-Commerce Experience Built with Flutter, Firebase & BLoC</strong>
+  <strong>A Modern E-Commerce Experience Built with Flutter, Firebase, BLoC & Clean Architecture</strong>
 </p>
 
 <p align="center">
